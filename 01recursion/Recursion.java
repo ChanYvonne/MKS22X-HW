@@ -11,6 +11,9 @@ public class Recursion implements hw01{
     }
 
     public double sqrtHelp(double n, double guess){
+	if (guess == 0 || n == 0){
+	    return 0;
+	}
 	if (Math.abs(guess*guess - n)/n < 0.000000001){
 	    return guess;
 	}
@@ -19,6 +22,7 @@ public class Recursion implements hw01{
 
     public static void main(String[]args){
 	Recursion test = new Recursion();
+	System.out.println(test.sqrt(0));
 	System.out.println(test.sqrt(100));
 	System.out.println(test.sqrt(24));
 	System.out.println(test.sqrt(94));
