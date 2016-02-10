@@ -1,9 +1,7 @@
 public class Board{
     private int[][] board;
-    private int queens;
 
-    public Board(int square, int queens){
-	this.queens = queens;
+    public Board(int square){
 	board = new int[square][square];
 	clear();
     }
@@ -37,7 +35,6 @@ public class Board{
 		colnum ++;
 	    }
 	    board[row][col] = 1;
-	    queens --;
 	}else{
 	    return false;
 	}
@@ -65,7 +62,6 @@ public class Board{
 		colnum ++;
 	    }
 	    board[row][col] = 0;
-	    queens ++;
 	}else{
 	    return false;
 	}
@@ -73,14 +69,21 @@ public class Board{
     }
 
     public boolean solve(){
-	if (queens == 0){
-	    return true;	    
-	}else{
-	    return helpSolve(0,queens);
-	}
+	    return helpSolve(0);
     }
 
-    public boolean helpSolve(int start, int queens){
+    public boolean helpSolve(int start){
+	int times = 0;
+	if (times == board.length){
+	    return true;	    
+	}else{
+	    for (int x = 0; x< board.length; x++){
+	  	if (addQueen(x,start)){
+		    times ++;
+		    helpSolve(start+1);
+		}
+	    }
+	}
 	return true;
     }
     
@@ -100,13 +103,17 @@ public class Board{
     }
 
     public static void main(String[]args){
-	Board test = new Board(5,5);
-	//System.out.println(test);
+	Board test = new Board(5);
+	System.out.println(test.solve());
+	System.out.println(test);
+	/*
 	System.out.print(test.addQueen(2,0));
 	System.out.println(test);
 	System.out.print(test.addQueen(4,1));
 	System.out.println(test);
 	System.out.print(test.removeQueen(4,1));
 	System.out.println(test);
+	*/
+	
     }
 }
