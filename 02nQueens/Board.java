@@ -27,8 +27,8 @@ public class Board{
 		    board[x][colnum]--;
 		}
 	    }
-	    colnum = col + 1;
-	    for (int x = row - 1; x >= 0; x--){
+	    colnum = col;
+	    for (int x = row; x >= 0; x--){
 		if (colnum < board.length){
 		    board[x][colnum]--;
 		}
@@ -54,8 +54,8 @@ public class Board{
 		}
 		colnum ++;
 	    }
-	    colnum = col + 1;
-	    for (int x = row - 1; x >= 0; x--){
+	    colnum = col;
+	    for (int x = row; x >= 0; x--){
 		if (colnum < board.length){
 		    board[x][colnum]++;
 		}
@@ -69,22 +69,34 @@ public class Board{
     }
 
     public boolean solve(){
-	    return helpSolve(0);
+	return helpSolve(0);
     }
 
     public boolean helpSolve(int start){
-	int times = 0;
-	if (times == board.length){
-	    return true;	    
-	}else{
-	    for (int x = 0; x< board.length; x++){
-	  	if (addQueen(x,start)){
-		    times ++;
-		    helpSolve(start+1);
-		}
+	if (start == board.length){
+	    return true;
+	}
+	for (int x = 0; x < board.length; x++){
+	    System.out.println(toString());
+	    //System.out.println(addQueen(x,start));
+	    System.out.println(start);
+	    if (addQueen(x,start)){
+		helpSolve(start+1);
+	    }else if( x == board.length-1 && !(checkLastCol())){
+		removeQueen(x,start-1);
 	    }
 	}
-	return true;
+	return false;
+    }
+
+    public boolean checkLastCol(){
+	boolean ans = false;
+	for (int i = 0; i < board.length;i++){
+	    if (board[i][board.length-1]==1){
+		ans = true;
+	    }
+	}
+	return ans;
     }
     
     public String toString(){
@@ -107,11 +119,17 @@ public class Board{
 	System.out.println(test.solve());
 	System.out.println(test);
 	/*
-	System.out.print(test.addQueen(2,0));
+	System.out.print(test.addQueen(0,0));
 	System.out.println(test);
-	System.out.print(test.addQueen(4,1));
+	System.out.print(test.addQueen(2,1));
 	System.out.println(test);
-	System.out.print(test.removeQueen(4,1));
+	System.out.print(test.addQueen(4,2));
+	System.out.println(test);
+	System.out.print(test.removeQueen(0,0));
+	System.out.println(test);
+	System.out.print(test.removeQueen(2,1));
+	System.out.println(test);
+	System.out.print(test.removeQueen(4,2));
 	System.out.println(test);
 	*/
 	
