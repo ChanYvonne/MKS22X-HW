@@ -1,7 +1,7 @@
-public class Board{
+public class QueenBoard{
     private int[][] board;
 
-    public Board(int square){
+    public QueenBoard(int square){
 	board = new int[square][square];
 	clear();
     }
@@ -73,20 +73,23 @@ public class Board{
     }
 
     public boolean helpSolve(int start){
+	boolean ans = false;
 	if (start == board.length){
-	    return true;
-	}
+	    ans = true;
+	}else{
 	for (int x = 0; x < board.length; x++){
 	    printSolution();
 	    //System.out.println(addQueen(x,start));
 	    System.out.println(start);
 	    if (addQueen(x,start)){
-		helpSolve(start+1);
+		ans = helpSolve(start+1);
+		return ans;
 	    }else if( x == board.length-1 && !(checkLastCol())){
 		removeQueen(x,start-1);
 	    }
 	}
-	return false;
+	}
+	return ans;
     }
 
     public boolean checkLastCol(){
@@ -115,7 +118,7 @@ public class Board{
     }
 
     public static void main(String[]args){
-	Board test = new Board(5);
+	QueenBoard test = new QueenBoard(5);
         System.out.println(test.solve());
 	test.printSolution();
 	/*  
