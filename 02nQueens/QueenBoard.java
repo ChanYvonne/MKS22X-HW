@@ -78,9 +78,9 @@ public class QueenBoard{
 	    ans = true;
 	}else{
 	for (int x = 0; x < board.length; x++){
-	    printSolution();
+	    //printSolution();
 	    //System.out.println(addQueen(x,start));
-	    System.out.println(start);
+	    //System.out.println(start);
 	    if (addQueen(x,start)){
 		ans = helpSolve(start+1);
 		return ans;
@@ -106,10 +106,14 @@ public class QueenBoard{
 	String out = "\n";
         for (int x = 0; x < board.length; x++){
 	    for (int i = 0; i < board[x].length; i++){
-		if (i == board[x].length-1){
-		    out += Integer.toString(board[x][i]);
+		if (i == board[x].length-1 && !(board[x][i] == 1)){
+		    out += "-";
+		}else if (i == board[x].length-1 && board[x][i] == 1){
+		    out += "Q";
+		}else if ( !(board[x][i] == 1)){
+		    out += "- ";
 		}else{
-		    out += Integer.toString(board[x][i])+ " ";
+		    out += "Q ";
 		}
 	    }
 	    out += "\n";
