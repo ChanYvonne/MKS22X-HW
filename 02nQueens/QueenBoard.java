@@ -121,10 +121,29 @@ public class QueenBoard{
 	System.out.println(out);
     }
 
+    public String toString(){
+	String out = "\n";
+        for (int x = 0; x < board.length; x++){
+	    for (int i = 0; i < board[x].length; i++){
+		if (i == board[x].length-1){
+		    out += Integer.toString(board[x][i]);
+		}else{
+		    out += Integer.toString(board[x][i])+ " ";
+		}
+	    }
+	    out += "\n";
+	}
+	return out;
+    }
+
+
+
     public static void main(String[]args){
-	QueenBoard test = new QueenBoard(5);
-        System.out.println(test.solve());
-	test.printSolution();
+	for (int x = 0; x < 8; x++){
+	    QueenBoard test = new QueenBoard(x);
+	    System.out.println(test.solve());
+	    test.printSolution();
+	}
 	/*  
 	System.out.print(test.addQueen(0,0));
 	System.out.println(test);
