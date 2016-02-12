@@ -86,6 +86,7 @@ public class QueenBoard{
 		return ans;
 	    }else if( x == board.length-1 && !(checkLastCol())){
 		removeQueen(x,start-1);
+		helpSolve(start-1);
 	    }
 	}
 	}
@@ -139,7 +140,7 @@ public class QueenBoard{
 
 
     public static void main(String[]args){
-	for (int x = 0; x < 8; x++){
+	for (int x = 0; x < 10; x++){
 	    QueenBoard test = new QueenBoard(x);
 	    System.out.println(test.solve());
 	    test.printSolution();
