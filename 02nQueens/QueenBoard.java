@@ -1,8 +1,10 @@
 public class QueenBoard{
     private int[][] board;
+    //private int[] queens; tried the method of keeping track of each queen's row but didn't work :(
 
     public QueenBoard(int square){
 	board = new int[square][square];
+	//queens = new int[square];
 	clear();
     }
 
@@ -12,6 +14,11 @@ public class QueenBoard{
 		board[x][i] = 0;
 	    }
 	}
+	/*
+	for (int x = 0; x < queens.length; x++){
+	    queens[x] = -1;
+	}
+	*/		
     }
 
     public boolean addQueen(int row, int col){
@@ -35,6 +42,7 @@ public class QueenBoard{
 		colnum ++;
 	    }
 	    board[row][col] = 1;
+	    //queens[col] = row;
 	}else{
 	    return false;
 	}
@@ -62,6 +70,7 @@ public class QueenBoard{
 		colnum ++;
 	    }
 	    board[row][col] = 0;
+	    //queens[col] = -1;
 	}else{
 	    return false;
 	}
@@ -78,16 +87,26 @@ public class QueenBoard{
 	    ans = true;
 	}else{
 	for (int x = 0; x < board.length; x++){
-	    //printSolution();
+	    //System.out.println(toString());
 	    //System.out.println(addQueen(x,start));
 	    //System.out.println(start);
 	    if (addQueen(x,start)){
-		ans = helpSolve(start+1);
-		return ans;
-	    }else if( x == board.length-1 && !(checkLastCol())){
-		removeQueen(x,start-1);
-		helpSolve(start-1);
+		if (helpSolve(start+1)){
+		    return true;
+		}
+		removeQueen(x,start);
 	    }
+	    /*if (!(queens[start] == x)){
+		addQueen(x,start);
+	        ans = helpSolve(start+1);
+	    }else{// if( x == board.length-1 && !(checkLastCol())){
+		if (start == 0){
+		    return false;
+		}
+		removeQueen(queens[start-1],start-1);
+		ans = helpSolve(start-1);
+	    }
+	    */
 	}
 	}
 	return ans;
