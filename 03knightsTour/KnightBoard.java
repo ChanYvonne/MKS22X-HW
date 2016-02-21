@@ -34,7 +34,7 @@ public class KnightBoard{
 
     public boolean helpSolve(int col, int row, int steps){
 	//boolean ans = false;
-	if (steps == rows*cols){
+	if (steps == rows*cols+1){
 	    return true;
 	}
 	if(!(isValidMove(col,row))){
@@ -42,8 +42,8 @@ public class KnightBoard{
 	}
 	for (int x = 0; x < getRows(); x++){
 	    for (int i = 0; i < getCols();i++){
-		if (isValidStep()){
-		    board[x][i]++;
+		if (isValidMove()){
+		    board[x][i] = steps;
 		}
 	    }
 	}
