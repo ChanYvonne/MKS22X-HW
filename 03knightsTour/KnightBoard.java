@@ -1,15 +1,15 @@
 public class KnightBoard{
-    private board int[][];
+    private int[][] board;
     private int rows, cols;
 
-    public Board(int size){
+    public KnightBoard(int size){
 	board = new int[size][size];
 	rows = size;
 	cols = size;
 	clear();
     }
 
-    public Board(int cols, int rows){
+    public KnightBoard(int cols, int rows){
 	board = new int[rows][cols];
 	this.rows = rows;
 	this.cols = cols;
@@ -29,7 +29,7 @@ public class KnightBoard{
     }
 
     public boolean solve(){
-	return helpSolve(0,0);
+	return helpSolve(0,0,1);
     }
 
     public boolean helpSolve(int col, int row, int steps){
@@ -40,29 +40,65 @@ public class KnightBoard{
 	if(!(isValidMove(col,row))){
 	    return false;
 	}
-	for (int x = 0; x < getRows(); x++){
-	    for (int i = 0; i < getCols();i++){
-		if (isValidMove()){
-		    board[x][i] = steps;
-		}
-	    }
+	System.out.println(toString());
+	if (isValidMove(col+1,row+2) && board[row+2][col+1] == 0){
+	    board[row][col] = steps;
+	    return helpSolve(col+1,row+2,steps+1);
+	}else if (isValidMove(col+2,row+1) && board[row+1][col+2] == 0){
+	    board[row][col] = steps;
+	    return helpSolve(col+2,row+1,steps+1);
+	}else if (isValidMove(col+2,row-1) && board[row-1][col+2] == 0){
+	    board[row][col] = steps;
+	    return helpSolve(col+2,row-1,steps+1);
+	}else if (isValidMove(col+1,row-2) && board[row-2][col+1] == 0){
+	    board[row][col] = steps;
+	    return helpSolve(col+1,row-2,steps+1);
+	}else if (isValidMove(col-1,row-2) && board[row-2][col-1] == 0){
+	    board[row][col] = steps;
+	    return helpSolve(col-1,row-2,steps+1);
+	}else if (isValidMove(col-2,row-1) && board[row-1][col-2] == 0){
+	    board[row][col] = steps;
+	    return helpSolve(col-2,row-1,steps+1);
+	}else if (isValidMove(col-2,row+1) && board[row+1][col-2] == 0){
+	    board[row][col] = steps;
+	    return helpSolve(col-2,row+1,steps+1);
+	}else if (isValidMove(col-1,row+2) && board[row+2][col-1] == 0){
+	    board[row][col] = steps;
+	    return helpSolve(col-1,row+2,steps+1);
+	}else{
+	    return false;
 	}
-	return false;
+    }
+
+    public String toString(){
+	String ans = "";
+	for (int x =0; x < board.length;x++){
+	    for(int i = 0; i < board[x].length; i++){
+		ans += Integer.toString(board[x][i]) + " ";
+	    }
+	    ans += "\n";
+	}
+	return ans;
     }
     
     public void printSolution(){
 	String ans = "";
 	for (int x = 0; x < board.length; x++){
 	    for (int i = 0; i < board[x].length; i++){
-		if (rows*cols >= 10 && Integer.StringOf(board[x][i]) == 1){
-		    ans += "_" + Integer.StringOf(board[x][i]) + " ";
+		if (rows*cols >= 10 && board[x][i]/10 == 0){
+		    ans += "_" + Integer.toString(board[x][i]) + " ";
 		}else{
-		    ans += Integer.StringOf(board[x][i]) + " ";
+		    ans += Integer.toString(board[x][i]) + " ";
 		}
 	    }
 	    ans += "\n";
 	}
 	System.out.println(ans);
     }
-    
+
+    public static void main(String[]args){
+	KnightBoard test = new KnightBoard(3);
+	test.solve();
+	test.printSolution();
+    }
 }
