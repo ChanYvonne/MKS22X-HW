@@ -29,14 +29,7 @@ public class KnightBoard{
     }
 
     public boolean solve(){
-	for (int x = 0; x < rows; x++){
-	    for (int i = 0; i < cols; i++){
-		if (helpSolve(i,x,1)){
-		    return true;
-		}
-	    }
-	}
-	return false;
+	return helpSolve(0,0,1);
     }
 
     public boolean addKnight(int row, int col, int step){
