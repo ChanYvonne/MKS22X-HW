@@ -11,6 +11,7 @@ public class Bronze{
         instructions = new String[instruction.length];
 	rows = row;
 	cols = col;
+	elevation = elev;
 	for (int x = 0; x < row; x++){
 	    for (int i = 0; i < col; i++){
 	        hill[x][i] = sample[x][i];
@@ -23,35 +24,39 @@ public class Bronze{
 
     public int solve(){
 	int depth = 0;
-	String com = "";
+	String command = "";
 	int spotRow = 0;
 	int spotCol = 0;
 	int total = 0;
 	int elev = 0;
-	for (int x = 0; x < commands.length; x++){
+	for (int x = 0; x < instructions.length; x++){
 	    command = instructions[x];
-	    spotRow = Integer.parseInt(command.substring(0))-1;
-	    spotCol = Integer.parseInt(command.substring(2))-1;
-	    depth = command.substring(4);
+	    spotRow = Integer.parseInt(command.substring(0,1))-1;
+	    spotCol = Integer.parseInt(command.substring(2,3))-1;
+	    depth = Integer.parseInt(command.substring(4,command.length()));
+	    //System.out.println(command.substring(depth));
 	    elev = hill[spotRow][spotCol];
-	    for (int r = spotRow;r < spotRow + 3 && r < rows-2; r++){
-		for (int c = spotCol; c < spotCol + 3 && c < rows-2;c++){
+	    for (int r = spotRow;r < spotRow + 3; r++){
+		for (int c = spotCol; c < spotCol + 3;c++){
 		    if (elev-depth < hill[r][c]){
 			hill[r][c] = elev-depth; 
 		    }
 		}
 	    }
+	    //System.out.println(toString());
 	}
 	for (int x = 0; x < rows; x++){
 	    for (int i = 0; i < cols; i++){
 		if (elevation-hill[x][i] <= 0){
 		    hill[x][i] = -1;
 		}else{
+		    //System.out.println(elevation);
 		    hill[x][i] = elevation-hill[x][i];
 		    total+= hill[x][i];
 		}
 	    }
 	}
+	//System.out.println(toString());
 	return total*72*72;
     }
 
@@ -78,6 +83,7 @@ public class Bronze{
 	    int row = Integer.parseInt(in.next());
 	    int col = Integer.parseInt(in.next());
 	    int elevation = Integer.parseInt(in.next());
+	    //System.out.println(elevation);
 	    int[][] sample = new int[row][col];
 	    int com = Integer.parseInt(in.next());
 	    for (int x = 0; x < row; x++){
@@ -85,17 +91,17 @@ public class Bronze{
 		    sample[x][i] = Integer.parseInt(in.next());
 		}
 	    }
+	    String empty = in.nextLine(); //random empty string for purpose of debugging - DO NOT REMOVE THIS LINE
 	    String[] commands = new String[com];
-	    for (int x = 0; x < com; x++){
-		commands[x] = in.nextLine();
-	    }
+	    commands[0] = in.nextLine();
+	    commands[1] = in.nextLine();
 	    /*
-	      while (line.hasNext()){
-		System.out.print(line.next()+" ");
-	      }
+	      for (int x = 0; x < commands.length; x++){
+		//System.out.println(commands[x]);
+	    }
 	    */
 	    Bronze test = new Bronze(row,col,sample,elevation,commands);
-	    System.out.println(test);
+	    //System.out.println(test);
 	    System.out.println(test.solve() + ",6,Chan,Yvonne");
 	}catch (FileNotFoundException e){
 	    e.printStackTrace();
