@@ -22,17 +22,26 @@ public class Maze{
 	//COMPLETE CONSTRUCTOR
 	animate = ani;
 	try{
-	    String[] layout = filename.split("\n");
+	    String smaze = "";
+	    File file = new File(filename);
+	    Scanner s = new Scanner(file);
+	    while (s.hasNextLine()){
+		smaze += s.nextLine() + "\n";
+	    }
+	    String[] layout = smaze.split("\n");
 	    maze = new char[layout.length][layout[0].length()];
 	    for (int x = 0; x < layout.length; x++){
 		for (int i = 0; i < layout[x].length(); i++){
 		    maze[x][i] = layout[x].charAt(i);
+		    if (maze[x][i] == 'S'){
+			startx = i;
+			starty = x;
+		    }
 		}
 	    }
 	}catch (FileNotFoundException e){
-	    e.printStackTrace();
 	    System.out.println("File not found!");
-	    System.exit(0);
+	    e.printStackTrace();
 	}        
     }
 
