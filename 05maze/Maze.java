@@ -42,6 +42,7 @@ public class Maze{
 	}catch (FileNotFoundException e){
 	    System.out.println("File not found!");
 	    e.printStackTrace();
+	    System.exit(0);
 	}        
     }
 
