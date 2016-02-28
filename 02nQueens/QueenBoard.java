@@ -83,6 +83,9 @@ public class QueenBoard{
 
     public boolean helpSolve(int start){
 	boolean ans = false;
+	if (board.length == 0){
+	    return false;
+	}
 	if (start == board.length){
 	    ans = true;
 	}else{
