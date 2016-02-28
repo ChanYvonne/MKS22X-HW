@@ -120,5 +120,13 @@ public class KnightBoard{
 	KnightBoard test6 = new KnightBoard(3);
 	System.out.println(test6.solve());
 	test6.printSolution();
+
+	KnightBoard test7 = new KnightBoard(4);
+	System.out.println(test7.solve());
+	test7.printSolution();
+
+	KnightBoard test8 = new KnightBoard(5,3);
+	System.out.println(test8.solve());
+	test8.printSolution();
     }
 }
