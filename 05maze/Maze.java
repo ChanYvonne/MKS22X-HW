@@ -34,8 +34,8 @@ public class Maze{
 		for (int i = 0; i < layout[x].length(); i++){
 		    maze[x][i] = layout[x].charAt(i);
 		    if (maze[x][i] == 'S'){
-			startx = i;
-			starty = x;
+			startx = x;
+			starty = i;
 		    }
 		}
 	    }
@@ -81,11 +81,39 @@ public class Maze{
             System.out.println(this);
             wait(20);
         }
-
-        //COMPLETE SOLVE
-        return false; //so it compiles
+	if (maze[x][y] == 'E'){
+	    return true;
+	}
+	/*
+	if (!(isValidMove(x,y))){
+	    return false;
+	}
+	*/
+	if (moveHere(x,y)){
+	    if (solve(x+1,y) || solve(x-1,y) || solve(x,y+1) || solve(x,y-1)){
+		return true;
+	    }
+	    maze[x][y] = '.';
+	}
+	return false;
     }
 
+    /*
+    private boolean isValidMove(int x, int y){
+	return maze[x][y] == ' ';
+    }
+    */
+
+    private boolean moveHere(int x, int y){
+	if (maze[x][y] == ' '){
+	    maze[x][y] = '@';
+	    return true;
+	}
+	return false;
+    }
+    
+
+    
 
     //FREE STUFF!!! *you should be aware of this*
 
@@ -112,6 +140,7 @@ public class Maze{
             }
         }
         return HIDE_CURSOR + go(0,0) + ans + "\n" + SHOW_CURSOR + color(37,40);
+	//return ans;
     }
 
     //MORE FREE STUFF!!! *you can ignore all of this*
