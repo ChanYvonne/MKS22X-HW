@@ -4,22 +4,75 @@ import java.io.*;
 public class Silver{
     private int[][] field;
     private int rows, cols, time;
-    private String[] begin;
+    private int[] begin;
 
-    public Silver(int row, int col, int[][] grass, int step, String[] spot){
+    public Silver(int row, int col, char[][] grass, int step, int[] spot){
 	field = new int[row][col];
-        begin = new String[spot.length];
+        begin = new int[spot.length];
 	rows = row;
 	cols = col;
 	time = step;
-	for (int x = 0; x < row; x++){
+        for (int x = 0; x < row; x++){
 	    for (int i = 0; i < col; i++){
-	        field[x][i] = grass[x][i];
+		if (grass[x][i] == '*'){
+		    field[x][i] = -1;
+		}
+		else{
+		    field[x][i] = 0;
+		}
 	    }
 	}
 	for (int i = 0; i < spot.length; i++){
 	    begin[i] = spot[i];
 	}
+    }
+
+    public void replicate(int[][] temp, int[][] grass){
+	for (int r = 0; r < rows; r++){
+	    for (int c = 0; c < cols; c++){
+		temp[r][c] = grass[r][c];
+	    }
+	}
+    }
+
+    public int solve(){
+	field[begin[0]-1][begin[1]-1] = 1;
+	int[][] temp = new int[rows][cols];
+        replicate(temp,field);
+	for (int x = 0; x < time; x++){
+	    for (int r = 0; r < rows; r++){
+		for (int c = 0; c < cols; c++){
+		    if (!(field[r][c] == -1)){
+			if (field[r][c] == 0){
+			    temp[r][c] = calcSteps(r,c);
+			    //System.out.println(calcSteps(r,c));
+			}else{
+			    temp[r][c] = 0;
+			}
+		    }
+		}
+	    }
+	    replicate(field,temp);
+	    //System.out.println(toString());
+	}
+	return field[begin[2]-1][begin[3]-1];
+    }
+
+    public int calcSteps(int row, int col){
+	int sum = 0;
+	if (row - 1 >= 0 && !(field[row-1][col] == -1)){
+	    sum+= field[row-1][col];
+	}
+	if (row + 1 < rows && !(field[row+1][col] == -1)){
+	    sum+= field[row+1][col];
+	}
+	if (col - 1 >= 0 && !(field[row][col-1] == -1)){
+	    sum+= field[row][col-1];
+	}
+	if (col + 1 < cols && !(field[row][col+1] == -1)){
+	    sum+= field[row][col+1];
+	}
+	return sum;
     }
     
     public String toString(){
@@ -38,39 +91,42 @@ public class Silver{
     }
     
     public static void main(String[]args){
-	Silver test = new Silver();
-	System.out.println(test);
-	/*
-	String s = "4 6 22 2\n28 25 20 32 34 36\n27 25 20 20 30 34\n24 20 20 20 20 30\n20 20 14 14 20 20\n1 4 4\n1 1 10";
+	String s = "4 5 6\n...*.\n...*.\n.....\n.....\n1 3 1 5";
+	
 	try{
-	    Scanner in = new Scanner(new File("makeLake.in"));
+	    Scanner in = new Scanner(new File("ctravel.in"));
 	    //Scanner in = new Scanner(s);
+	    for (int w = 0; w < 3; w++){
 	    int row = Integer.parseInt(in.next());
 	    int col = Integer.parseInt(in.next());
-	    int elevation = Integer.parseInt(in.next());
+	    int time = Integer.parseInt(in.next());
 	    //System.out.println(elevation);
-	    int[][] sample = new int[row][col];
-	    int com = Integer.parseInt(in.next());
+	    char [][] sample = new char[row][col];
 	    for (int x = 0; x < row; x++){
-		for (int i = 0; i < col; i++){
-		    sample[x][i] = Integer.parseInt(in.next());
+		String line = in.next();
+		for (int i = 0; i < col; i++){			
+		    sample[x][i] = line.charAt(i);
+		    //System.out.println(sample[x][i]);
 		}
 	    }
 	    String empty = in.nextLine(); //random empty string for purpose of debugging - DO NOT REMOVE THIS LINE
-	    String[] commands = new String[com];
-	    commands[0] = in.nextLine();
-	    commands[1] = in.nextLine();
+	    int[] layout = new int[4];
+	    for (int x = 0; x < 4; x++){
+		layout[x] = Integer.parseInt(in.next());
+		//System.out.println(layout[x]);
+	    }
 	    /*
 	      for (int x = 0; x < commands.length; x++){
 		//System.out.println(commands[x]);
 	    }
 	    */
-	    Bronze test = new Bronze(row,col,sample,elevation,commands);
+	    String empty2 = in.nextLine(); //random empty string for purpose of debugging - DO NOT REMOVE THIS LINE
+	    Silver test = new Silver(row,col,sample,time,layout);
 	    //System.out.println(test);
 	    System.out.println(test.solve() + ",6,Chan,Yvonne");
+	    }
 	}catch (FileNotFoundException e){
 	    e.printStackTrace();
 	}
-    */
     }
 }
