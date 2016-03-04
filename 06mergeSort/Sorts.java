@@ -120,27 +120,20 @@ public class Sorts{
     }
 
     public static void mergeSort(int[] data, int startA, int endA, int startB,int endB){
-	int[] tempA = Arrays.copyOf(data,endA-startA+1);
-        for (int x = 0; x < tempA.length; x++){
-	    for (int i = startA; i < endA+1; i++){
-		System.out.println(data[i]);
-	        tempA[x] = data[i];
-	    }
+	int[] tempA = new int[endA-startA+1];
+	for (int i = startA; i < endA+1; i++){
+	    tempA[i-startA] = data[i];
 	}
-	printArray(tempA);
-	int[] tempB = Arrays.copyOf(data,endB-startB+1);
+	//printArray(tempA);
+	int[] tempB = new int[endB-startB+1];
 	for (int x = startB; x < endB+1; x++){
-	    for (int i = 0; i < tempB.length; i++){
-	        tempB[i] = data[x];
-	    }
+	    tempB[x-startB] = data[x];
 	}
-	printArray(tempB);
+	//printArray(tempB);
 	int[] ABcombo = mergeSort(tempA,tempB);
-	printArray(ABcombo);
+	//printArray(ABcombo);
 	for (int x = startA; x < endB+1; x++){
-	    for (int i = 0; i < ABcombo.length; i++){
-		data[x] = ABcombo[i];
-	    }
+	    data[x] = ABcombo[x-startA];
 	}
     }
 
