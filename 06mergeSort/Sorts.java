@@ -97,7 +97,7 @@ public class Sorts{
     }
     */
 
-    public static int[] mergeSort(int[] aryA, int[] aryB){
+    public static int[] merge(int[] aryA, int[] aryB){
 	int[] sorted = new int[aryA.length + aryB.length];
 	int countA = 0;
 	int countB = 0;
@@ -119,7 +119,7 @@ public class Sorts{
 	return sorted;
     }
 
-    public static void mergeSort(int[] data, int startA, int endA, int startB,int endB){
+    public static int[] merge(int[] data, int startA, int endA, int startB,int endB){
 	int[] tempA = new int[endA-startA+1];
 	for (int i = startA; i < endA+1; i++){
 	    tempA[i-startA] = data[i];
@@ -130,11 +130,29 @@ public class Sorts{
 	    tempB[x-startB] = data[x];
 	}
 	//printArray(tempB);
-	int[] ABcombo = mergeSort(tempA,tempB);
+	/*
+	int[] ABcombo = merge(tempA,tempB);
 	//printArray(ABcombo);
 	for (int x = startA; x < endB+1; x++){
 	    data[x] = ABcombo[x-startA];
 	}
+	*/
+	return merge(tempA,tempB);
+    }
+
+    public static int[]  mergeSortHelper(int[] data, int start, int end){
+	if (start + 1  == end){
+	    return data;
+	}else{
+	    printArray(data);
+	    return merge(data,start/2, end/2,end/2 +1, end/2+(end/2-start/2)+1);
+	    //return mergeSortHelper(merge(data,start/2, end/2,end/2 +1, end/2+(end/2-start/2)+1),start/2,end/2+(end/2-start/2)+1);
+	}
+	
+    }
+
+    public static void mergeSort(int[] data){
+	data = mergeSortHelper(data,0, data.length-1);
     }
 
     public static void printArray(int[]data){
@@ -164,7 +182,7 @@ public class Sorts{
 	int[] Btest = {2,4,8,11,40,172};
 	int[] Ctest = {12,26,37,1,6,10,24,88,253,2,7,8,48,67,723,242,146,2};
         //printArray(mergeSort(Atest,Btest));
-	mergeSort(Ctest, 3, 8, 9, 14);
+	mergeSort(Ctest);
 	printArray(Ctest);
     }
 }
