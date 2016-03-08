@@ -118,7 +118,7 @@ public class Sorts{
 	}
     }
 
-    private static void mergeSortHelper(int[] data, int startA, int endA, int startB,int endB){
+    private static void mergesorthelper(int[] data, int startA, int endA, int startB,int endB){
 	if (!(data.length <= 1)){
 	    int[] tempA = new int[endA-startA];
 	    for (int i = 0; i < tempA.length; i++){
@@ -131,8 +131,8 @@ public class Sorts{
 	    }
 	    //printArray(tempB);
 
-	    mergeSortHelper(tempA,0,tempA.length/2,tempA.length/2,tempA.length-1);
-	    mergeSortHelper(tempB,0,tempB.length/2,tempB.length/2,tempB.length-1);
+	    mergesorthelper(tempA,0,tempA.length/2,tempA.length/2,tempA.length-1);
+	    mergesorthelper(tempB,0,tempB.length/2,tempB.length/2,tempB.length-1);
 
 	    /*
 	      int[] ABcombo = merge(tempA,tempB);
@@ -147,8 +147,8 @@ public class Sorts{
     }
 
 
-    public static void mergeSort(int[] data){
-	mergeSortHelper(data,0,data.length/2,data.length/2,data.length-1);
+    public static void mergesort(int[] data){
+	mergesorthelper(data,0,data.length/2,data.length/2,data.length-1);
     }
 
     public static void printArray(int[]data){
@@ -182,9 +182,12 @@ public class Sorts{
 	int[] Btest = {2,4,8,11,40,172};
 	int[] sorted = {1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6};
 	int[] Ctest = {12,26,37,1,6,10,24,88,253,2,7,8,48,67,723,242,146,2};
+	int[] Dtest = {1,73,84,35,32,76,-3};
 	//merge(sorted,Atest,Btest);
 	//printArray(sorted);
-	mergeSort(Ctest);
+	mergesort(Ctest);
 	printArray(Ctest);
+	mergesort(Dtest);
+	printArray(Dtest);
     }
 }
