@@ -4,12 +4,21 @@ public class Quick{
 	int index = (int)randnum;
 	int value = data[index];
 	System.out.println(value);
+	int rightIndex = right;
+	int leftIndex = left;
+	int[] sorted = new int[data.length];
+	for (int x = 0; x < data.length; x++){
+	    if (data[x] < value){
+		sorted[left] = data[x];
+		leftIndex++;
+	    }else if(data[x] > value){
+		sorted[right] = data[x];
+		rightIndex--;
+	}
 	/*
 	data[index] = data[right/2];
 	data[right/2] = value;
-	*/
-	int rightIndex = right;
-	int leftIndex = left;
+	
 	for (int x = left; x < index; x++){
 	    if (data[x] > value){
 		int temp = data[x];
@@ -18,7 +27,6 @@ public class Quick{
 		rightIndex--;
 	    }
 	}
-	/*
 	value = data[right/2];
 	data[right/2] = data[index];
 	data[index] = value;
