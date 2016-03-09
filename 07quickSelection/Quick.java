@@ -3,35 +3,43 @@ public class Quick{
 	double randnum = Math.random()*data.length;
 	int index = (int)randnum;
 	int value = data[index];
-	System.out.println(value);
+	//System.out.println(value);
 	int rightIndex = right;
 	int leftIndex = left;
 	int[] sorted = new int[data.length];
 	for (int x = 0; x < data.length; x++){
 	    if (data[x] < value){
-		sorted[left] = data[x];
+		sorted[leftIndex] = data[x];
 		leftIndex++;
-	    }else if(data[x] > value){
-		sorted[right] = data[x];
-		rightIndex--;
-	}
-	/*
-	data[index] = data[right/2];
-	data[right/2] = value;
-	
-	for (int x = left; x < index; x++){
+	    }
 	    if (data[x] > value){
-		int temp = data[x];
-		data[x] = data[rightIndex];
-		data[rightIndex] = temp;
+		sorted[rightIndex] = data[x];
 		rightIndex--;
 	    }
 	}
-	value = data[right/2];
-	data[right/2] = data[index];
-	data[index] = value;
+	for (int i = 0; i < sorted.length;i++){
+	    if (sorted[i] == 0){
+		sorted[i] = value;
+		index = i;
+	    }	  
+	}
+	/*
+	  data[index] = data[right/2];
+	  data[right/2] = value;
+	
+	  for (int x = left; x < index; x++){
+	  if (data[x] > value){
+	  int temp = data[x];
+	  data[x] = data[rightIndex];
+	  data[rightIndex] = temp;
+	  rightIndex--;
+	  }
+	  }
+	  value = data[right/2];
+	  data[right/2] = data[index];
+	  data[index] = value;
 	*/
-	printArray(data);
+	//printArray(sorted);
 	return index;
     }
     //choose a random partition element at a location from left to right inclusive.
@@ -44,7 +52,7 @@ public class Quick{
 
     
     public static int quickselect(int[]data, int k){
-	return 0;
+	return quickselect(data,k,0,data.length-1);
     }
     //return the kth smallest value.
     // when k = 0 return the smallest.
@@ -56,7 +64,22 @@ public class Quick{
 
     // helper method for quickselect recursive
     private static int quickselect(int[]data, int k, int left, int right){
-	return 0;
+	//printArray(data);
+	if (left == right){
+	    return data[k];
+	}
+	int index = partition(data, left, right);
+	/*
+	if (index == k){
+	    return data[index];
+	}
+	*/
+	int[] tempary = new int[Math.abs(right-left)];
+	if (index < k){
+	    return quickselect(data,k,index,right);
+	}else{
+	    return quickselect(data,k,left,index);
+	}
     }
     //return the kth smallest value in the given left/right range 
     // left <= k <= right
@@ -64,7 +87,7 @@ public class Quick{
     // quickselect(data,k,0,data.length-1)
 
     public static void printArray(int[]data){
-        String ans = "";
+	String ans = "";
 	for (int x = 0; x < data.length-1; x ++){
 	    ans+= " " + data[x] + ",";
 	}
@@ -73,6 +96,8 @@ public class Quick{
 
     public static void main(String[]args){
 	int[] test = {2,4,24,73,35,87,246,90,83,47,45,71};
-	System.out.println(partition(test,0,test.length-1));
+	//System.out.println(partition(test,0,test.length-1));
+	System.out.println(quickselect(test,5));
+	
     }
 }
