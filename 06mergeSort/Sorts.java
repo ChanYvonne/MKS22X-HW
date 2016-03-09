@@ -153,10 +153,14 @@ public class Sorts{
 
     public static void printArray(int[]data){
         String ans = "";
-	for (int x = 0; x < data.length-1; x ++){
-	    ans+= " " + data[x] + ",";
+	for (int x = 0; x < data.length; x ++){
+	    if (x == data.length-1){
+		ans+= " " + data[x];
+	    }else{
+		ans+= " " + data[x] + ",";
+	    }
 	}
-	System.out.println("[" + ans + " " + data[data.length-1] + "]");	
+	System.out.println("[" + ans + "]");	
     }
 
     /*
@@ -178,16 +182,26 @@ public class Sorts{
     }
 
     public static void main(String[]args){
-        int[] Atest = {1,5,6,9,17,76,91,164,636,2425};
-	int[] Btest = {2,4,8,11,40,172};
+        int[] Atest = {1};
+	int[] Btest = {2,4,8,11,40,172,13,46,-13,4,0};
 	int[] sorted = {1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6};
 	int[] Ctest = {12,26,37,1,6,10,24,88,253,2,7,8,48,67,723,242,146,2};
 	int[] Dtest = {1,73,84,35,32,76,-3};
+	int[] Etest = {76,-3};
+	int[] Ftest = {};
 	//merge(sorted,Atest,Btest);
 	//printArray(sorted);
+	mergesort(Atest);
+	printArray(Atest);
+	mergesort(Btest);
+	printArray(Btest);
 	mergesort(Ctest);
 	printArray(Ctest);
 	mergesort(Dtest);
 	printArray(Dtest);
+	mergesort(Etest);
+	printArray(Etest);
+	mergesort(Ftest);
+	printArray(Ftest);
     }
 }
