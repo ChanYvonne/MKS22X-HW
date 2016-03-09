@@ -1,13 +1,13 @@
 public class Quick{
     private static int partition(int[]data, int left, int right){
-	double randnum = Math.random()*data.length;
+	double randnum = left + Math.random()*(right-left+1);
 	int index = (int)randnum;
 	int value = data[index];
 	//System.out.println(value);
 	int rightIndex = right;
-	int leftIndex = left;
+	int leftIndex = left+1;
 	int[] sorted = new int[data.length];
-	for (int x = 0; x < data.length && leftIndex < data.length && rightIndex > 0; x++){
+	for (int x = 0; x < leftIndex && rightIndex > 0; x++){
 	    //for (int x = 0; x < data.length; x++){
 	    if (data[x] < value){
 		sorted[leftIndex] = data[x];
@@ -59,7 +59,7 @@ public class Quick{
     // when k = 0 return the smallest.
     // 0 <= k < data.length
 
-
+    /*
     private static int partitionSorted(int index,int[] data){
 	int value = data[index];
 	//System.out.println(value);
@@ -84,7 +84,8 @@ public class Quick{
 	}
 	printArray(sorted);
 	return sorted[index];
-    }
+    }   
+    */
 
 
     // helper method for quickselect recursive
@@ -93,7 +94,8 @@ public class Quick{
 	int index = partition(data, left, right);
 	System.out.println(index);
 	if (index == k){
-	    return partitionSorted(index,data);
+	    return data[index];
+	    //return partitionSorted(index,data);
 	}
 	//int[] tempary;
 	if (index < k){
@@ -104,7 +106,7 @@ public class Quick{
 	      }	    
 	      return quickselect(data,k,0,tempary.length-1);
 	    */
-	    return quickselect(data,k,index,right);
+	    return quickselect(data,k,index+1,right);
 	}else{
 	    /*
 	      tempary = new int[index];
@@ -113,7 +115,7 @@ public class Quick{
 	      }
 	      return quickselect(tempary,k,0,tempary.length-1);
 	    */
-	    return quickselect(data,k,left,index);
+	    return quickselect(data,k,left,index-1);
 	}
 	
     }
