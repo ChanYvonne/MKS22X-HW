@@ -1,7 +1,7 @@
 public class Quick{
     private static int partition(int[]data, int left, int right){
-	double randnum = left + Math.random()*(right-left+1);
-	int index = (int)randnum;
+	double randnum = Math.random()*(right-left+1);
+	int index = left + (int)randnum;
 	int value = data[index];
 	//System.out.println(value);
 	int rightIndex = right;
@@ -15,12 +15,12 @@ public class Quick{
 		leftIndex++;
 	    }
 	}
-	if (data[leftIndex] > value){
-	    swap(data,left,leftIndex-1);
-	    index = leftIndex-1;
+	if (data[rightIndex] > data[left]){
+	    swap(data,left,rightIndex-1);
+	    index = rightIndex-1;
 	}else{
-	    swap(data,left,leftIndex);
-	    index = leftIndex;
+	    swap(data,left,rightIndex);
+	    index = rightIndex;
 	}
 	//method of creating new array is hopeless :(
 	/*
@@ -44,7 +44,7 @@ public class Quick{
 	    data[i] = sorted[i];
 	}
 	*/
-	//printArray(sorted);
+	//printArray(data);
 	return index;
     }
     //choose a random partition element at a location from left to right inclusive.
@@ -104,6 +104,14 @@ public class Quick{
     //start by calling the helper as follows:
     // quickselect(data,k,0,data.length-1)
 
+    public static void quicksort(int[] data,int left, int right){
+	if (right-left > 1){
+	    int index = partition(data,left,right);
+	    quicksort(data,left,index-1);
+	    quicksort(data,index+1,right);
+	}
+    }
+    //chooses a partition element and then sorts either side recursively
     
     public static void printArray(int[]data){
         String ans = "";
@@ -129,11 +137,12 @@ public class Quick{
 	int[] test5 = {0,6,3,68,9,7,4,5,1,8,2};
 	/*
 	//partition test cases
-	System.out.println(partition(test,0,test.length-1));
-	System.out.println(partition(test,3,test.length-1));
-	System.out.println(partition(test,0,6));
-	System.out.println(partition(test,2,10));
+	System.out.println(partition(test5,0,test5.length-1));
+	System.out.println(partition(test5,3,test5.length-1));
+	System.out.println(partition(test5,0,3));
+	System.out.println(partition(test5,2,3));
 
+	
 	//quickselect test cases
 	System.out.println(quickselect(test,5)); //3
 	System.out.println(quickselect(test,12)); //17
@@ -141,24 +150,24 @@ public class Quick{
 	System.out.println(quickselect(test,0)); //-100
 	System.out.println(quickselect(test,1)); //-6
 	System.out.println(quickselect(test,7)); //5	
+	
 	*/
-
 	//quicksort test cases
 	printArray(test);
-	System.out.println(quicksort(test,0,test.length-1));
+        quicksort(test,0,test.length-1);
 	printArray(test);
 	printArray(test2);
-	System.out.println(quicksort(test,2,9));
+        quicksort(test2,2,9);
 	printArray(test2);
 	printArray(test3);
-	System.out.println(quicksort(test,1,3));
+	quicksort(test3,1,3);
 	printArray(test3);
 	printArray(test4);
-	System.out.println(quicksort(test,0,9));
+	quicksort(test4,0,9);
 	printArray(test4);
 	printArray(test5);
-	System.out.println(quicksort(test,2,test.length-1));
+	quicksort(test5,2,test5.length-1);
 	printArray(test5);
-	
+
     }
 }
