@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Quick{
     private static int partition(int[]data, int left, int right){
 	double randnum = Math.random()*(right-left+1);
@@ -22,7 +24,7 @@ public class Quick{
 	    swap(data,left,rightIndex);
 	    index = rightIndex;
 	}
-	//method of creating new array is hopeless :(
+	//method of creating new array is hopeless :( I GIVE UP 
 	/*
 	int[] sorted = new int[data.length];
 	for (int x = left; x < right; x++){
@@ -104,7 +106,7 @@ public class Quick{
     //start by calling the helper as follows:
     // quickselect(data,k,0,data.length-1)
 
-    public static void quicksort(int[] data,int left, int right){
+    public static void quickSort(int[] data,int left, int right){
 	if (right-left > 1){
 	    int index = partition(data,left,right);
 	    quicksort(data,left,index-1);
@@ -135,6 +137,7 @@ public class Quick{
 	int[] test3 = {2,4,11,-6,5};
 	int[] test4 = {9,2,23,6356,132,53,-3,0,1,6,2};
 	int[] test5 = {0,6,3,68,9,7,4,5,1,8,2};
+	int[] test6 = {0,0,0,0,0,0,0};
 	/*
 	//partition test cases
 	System.out.println(partition(test5,0,test5.length-1));
@@ -151,23 +154,39 @@ public class Quick{
 	System.out.println(quickselect(test,1)); //-6
 	System.out.println(quickselect(test,7)); //5	
 	
-	*/
+	
 	//quicksort test cases
 	printArray(test);
-        quicksort(test,0,test.length-1);
+        quickSort(test,0,test.length-1);
 	printArray(test);
 	printArray(test2);
-        quicksort(test2,2,9);
+        quickSort(test2,2,9);
 	printArray(test2);
 	printArray(test3);
-	quicksort(test3,1,3);
+	quickSort(test3,1,3);
 	printArray(test3);
 	printArray(test4);
-	quicksort(test4,0,9);
+	quickSort(test4,0,9);
 	printArray(test4);
 	printArray(test5);
-	quicksort(test5,2,test5.length-1);
+	quickSort(test5,2,test5.length-1);
 	printArray(test5);
+	printArray(test6);
+	quickSort(test6,0,test6.length-1);
+	printArray(test6);
+	*/
 
+	int[] big = new int[4000000];
+	for (int x = 0; x < big.length;x++){
+	    big[x] = Math.random()*3 + 1;
+	}
+	
+	int[] big2 = new int[4000000];
+	for (int x = 0; x < big.length;x++){
+	    big[x] = Math.random()*Integer.MAX_VALUE;
+	}
+	
+	
+	
     }
 }
