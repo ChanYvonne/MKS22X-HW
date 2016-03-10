@@ -104,6 +104,7 @@ public class Quick{
     //start by calling the helper as follows:
     // quickselect(data,k,0,data.length-1)
 
+    
     public static void printArray(int[]data){
         String ans = "";
 	for (int x = 0; x < data.length; x ++){
@@ -122,18 +123,42 @@ public class Quick{
     
     public static void main(String[]args){
 	int[] test = {2,4,11,-6,35,8,24,1,9,3,17,5,7,0,-100};
+	int[] test2 = {8,9,10,13,53,10,53,5,0,-100};
+	int[] test3 = {2,4,11,-6,5};
+	int[] test4 = {9,2,23,6356,132,53,-3,0,1,6,2};
+	int[] test5 = {0,6,3,68,9,7,4,5,1,8,2};
 	/*
+	//partition test cases
 	System.out.println(partition(test,0,test.length-1));
 	System.out.println(partition(test,3,test.length-1));
 	System.out.println(partition(test,0,6));
 	System.out.println(partition(test,2,10));
-	*/
+
+	//quickselect test cases
 	System.out.println(quickselect(test,5)); //3
 	System.out.println(quickselect(test,12)); //17
 	System.out.println(quickselect(test,14)); //35
 	System.out.println(quickselect(test,0)); //-100
 	System.out.println(quickselect(test,1)); //-6
 	System.out.println(quickselect(test,7)); //5	
+	*/
+
+	//quicksort test cases
+	printArray(test);
+	System.out.println(quicksort(test,0,test.length-1));
+	printArray(test);
+	printArray(test2);
+	System.out.println(quicksort(test,2,9));
+	printArray(test2);
+	printArray(test3);
+	System.out.println(quicksort(test,1,3));
+	printArray(test3);
+	printArray(test4);
+	System.out.println(quicksort(test,0,9));
+	printArray(test4);
+	printArray(test5);
+	System.out.println(quicksort(test,2,test.length-1));
+	printArray(test5);
 	
     }
 }
