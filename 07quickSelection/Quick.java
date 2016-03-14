@@ -17,7 +17,7 @@ public class Quick{
 		leftIndex++;
 	    }
 	}
-	if (data[rightIndex] > data[left]){
+        if (data[rightIndex] > data[left]){
 	    swap(data,left,rightIndex-1);
 	    index = rightIndex-1;
 	}else{
@@ -46,42 +46,80 @@ public class Quick{
 	    data[i] = sorted[i];
 	}
 	*/
-	//printArray(data);
+	printArray(data);
 	return index;
     }
 
-    private static int partition(int[]data, int left, int right){
+    private static int[] partition(int[]data, int left, int right){
 	double randnum = Math.random()*(right-left+1);
 	int index = left + (int)randnum;
 	int value = data[index];
-	//System.out.println(value);
-	int rightIndex = right;
-	int leftIndex = left;
-	int counter = 0;
-	int[] sorted = new int[right-left+1];
-	for (int x = 0; x < sorted.length; x++){
-	    if (data[x+left] == value){
-		counter++;
-		if (counter == rightIndex-leftIndex){
+	System.out.println(value);
+	int rightIndex = right-left;
+	int leftIndex = 0;
+	int[] limits = new int[2];
+	if (left == right){
+	    limits[0] = left;
+	    limits[1] = right;
+	}else{
+	    
+	    //tried so many different mehtods before getting it right!!
+
+	    //int counter = 0;
+	    swap(data,index,right);	
+	    //printArray(data);
+	    while (leftIndex < rightIndex){
+		if (data[leftIndex] > value){
+		    swap(data,leftIndex,rightIndex);
+		    rightIndex--;
+		}else{
+		    leftIndex++;
 		}
-	    }else if (data[x+left] < value){
-		sorted[leftIndex] = data[x+left];
-		leftIndex++;
-	    }else{
-		sorted[rightIndex] = data[x+left];
+	    }
+	    if (data[rightIndex] < data[right]){
+		swap(data,right,rightIndex-1);
 		rightIndex--;
+		limits[0] = rightIndex;
+		limits[1] = rightIndex;
+	    }else{
+		swap(data,right,rightIndex);
+		limits[0] = rightIndex;
+		limits[1] = rightIndex;
 	    }
-	}
-        sorted[rightIndex] = value;
-	data = new int[sorted.length];
-	for (int i = 0; i < sorted.length;i++){
-	    if (sorted[i] == value){
-		index = i;
+	    //printArray(data);
+	    for (int i = 0; i < rightIndex; i++){
+		if (data[i] == value){
+		    swap(data,i,rightIndex-1);
+		    limits[0] = rightIndex-1;
+		    rightIndex--;
+		}
 	    }
-	    data[i] = sorted[i];
+	    /*
+	    
+	      int[] sorted = new int[right-left+1];
+	      for (int x = left; x <= right; x++){
+		  if (data[x] < value){
+		      sorted[leftIndex] = data[x];
+		      leftIndex++;
+		  }else{
+		      sorted[rightIndex] = data[x];
+		      rightIndex--;
+		  }
+	      }
+	      for (int i = leftIndex; i <= rightIndex; i++){
+		  sorted[i] = value;
+	      }
+
+	      limits[1] = leftIndex;
+	      limits[0] = rightIndex;
+	      
+	      for (int i = left; i < sorted.length;i++){
+		  data[i] = sorted[i];
+	      }
+	    */
 	}
-	//printArray(data);
-	return index;
+	printArray(data);
+	return limits;
     }
 
     private static void swap(int[] data, int spotA, int spotB){
@@ -104,7 +142,7 @@ public class Quick{
     // helper method for quickselect recursive
     private static int quickselectOld(int[]data, int k, int left, int right){
 	//printArray(data);
-	int index = partition(data, left, right);
+	int index = partitionOld(data, left, right);
 	//System.out.println(index);
 	if (index == k){
 	    return data[index];
@@ -118,7 +156,7 @@ public class Quick{
 	      }	    
 	      return quickselect(data,k,0,tempary.length-1);
 	    */
-	    return quickselect(data,k,index,right);
+	    return quickselectOld(data,k,index,right);
 	}else{
 	    /*
 	      tempary = new int[index];
@@ -127,27 +165,27 @@ public class Quick{
 	      }
 	      return quickselect(tempary,k,0,tempary.length-1);
 	    */
-	    return quickselect(data,k,left,index);
+	    return quickselectOld(data,k,left,index);
 	}
     }
 
     private static int quickselect(int[]data, int k, int left, int right){
 	//printArray(data);
-	int index = partition(data, left, right);
+	int[] index = partition(data, left, right);
 	//System.out.println(index);
-	if (index == k){
-	    return data[index];
+	if (index[0] == k){
+	    return data[index[0]];
 	}
-	if (index < k){
-	    return quickselect(data,k,index,right);
+	if (index[0] < k){
+	    return quickselect(data,k,index[1]+1,right);
 	}else{
-	    return quickselect(data,k,left,index);
+	    return quickselect(data,k,left,index[0]-1);
 	}
     }
     
     public static void quickSortOld(int[] data,int left, int right){
 	if (right-left > 1){
-	    int index = partition(data,left,right);
+	    int index = partitionOld(data,left,right);
 	    quickSortOld(data,left,index-1);
 	    quickSortOld(data,index+1,right);
 	}
@@ -156,9 +194,9 @@ public class Quick{
     
     public static void quickSort(int[] data,int left, int right){
 	if (right-left > 1){
-	    int index = partition(data,left,right);
-	    quickSort(data,left,index-1);
-	    quickSort(data,index+1,right);
+	    int[] indexes = partition(data,left,right);
+	    quickSort(data,left,indexes[0]-1);
+	    quickSort(data,indexes[1],right);
 	}
     }
 
@@ -179,20 +217,30 @@ public class Quick{
     }
     
     public static void main(String[]args){
-	int[] test = {2,4,11,-6,35,8,24,1,9,3,17,5,7,0,-100};
-	int[] test2 = {8,9,10,13,53,10,53,5,0,-100};
+	int[] test = {1,1,1,1,2,4,56,3,6,0,-2,-9,-8};
+	int[] test2 = {8,9,10,13,53,10,53,5,0,-10};
 	int[] test3 = {2,4,11,-6,5};
 	int[] test4 = {9,2,23,23,132,83,23,74,90,53,-3,0,1,6,2};
 	int[] test5 = {0,6,3,68,9,7,4,5,1,8,2};
 	int[] test6 = {0,0,0,0,0,0,0};
-	
-	//partition test cases
-	System.out.println(partition(test4,0,test4.length-1));
-	System.out.println(partition(test4,3,test4.length-1));
-	System.out.println(partition(test4,0,3));
-	System.out.println(partition(test4,2,3));
 
 	/*
+	//partition test cases
+	printArray(partition(test,0,test.length-1));
+	printArray(partition(test2,0,test2.length-1));
+	printArray(partition(test4,0,test4.length-1));
+	printArray(partition(test3,1,test3.length-1));
+	printArray(partition(test5,0,test5.length-1));
+	printArray(partition(test6,0,test6.length-1));
+	
+        printArray(partition(test,0,7));
+	printArray(partition(test2,3,8));
+	printArray(partition(test4,0,6));
+	printArray(partition(test3,1,test3.length-1));
+	printArray(partition(test5,0,3));
+	printArray(partition(test6,0,test6.length-1));
+
+	
 	//quickselect test cases
 	System.out.println(quickselectOld(test,5)); //3
 	System.out.println(quickselectOld(test,12)); //17
@@ -204,53 +252,114 @@ public class Quick{
 	
 	//quicksort test cases
 	printArray(test);
-        quickSortOld(test,0,test.length-1);
+        quickSort(test,0,test.length-1);
 	printArray(test);
 	printArray(test2);
-        quickSortOld(test2,2,9);
+        quickSort(test2,0,test2.length-1);
 	printArray(test2);
 	printArray(test3);
-	quickSortOld(test3,1,3);
+	quickSort(test3,0,test3.length-1);
 	printArray(test3);
 	printArray(test4);
-	quickSortOld(test4,0,9);
+	quickSort(test4,0,test4.length-1);
 	printArray(test4);
 	printArray(test5);
-	quickSortOld(test5,2,test5.length-1);
+	quickSort(test5,0,test5.length-1);
 	printArray(test5);
 	printArray(test6);
-	quickSortOld(test6,0,test6.length-1);
+	quickSort(test6,0,test6.length-1);
 	printArray(test6);
+	
 	*/
 	
-
 	/*
-	int[] big = new int[4000000];
-	for (int x = 0; x < big.length;x++){
-	    big[x] = (int)Math.random()*3 + 1;
-	}
+	int[]d = new int [4000000];
+	int[] c = new int [d.length];
 
-	long startTime1 = System.currentTimeMillis();
-        Arrays.sort(big);
-	long endTime1 = System.currentTimeMillis();
-	System.out.println("System: " +(endTime1-startTime1));
-	
-	long startTime2 = System.currentTimeMillis();
-        quickSortOld(big,0,big.length-1);
-	long endTime2 = System.currentTimeMillis();
-	System.out.println("quickSortOld: " +(endTime2-startTime2));
-	
-	
-	int[] big2 = new int[4000000];
-	for (int x = 0; x < big.length;x++){
-	    big[x] = (int)Math.random()*Integer.MAX_VALUE;
+	for(int i = 0; i < d.length; i++){
+	    d[i]= (int)(Math.random()*Integer.MAX_VALUE);
+	    c[i]= d[i];
 	}
+	quickSort(d,0,d.length-1); //or even your old quicksort!!!
+	Arrays.sort(c);
+	System.out.println("Done: Sorted="+Arrays.equals(d,c));
+	*/
+
 	
-	long startTime2 = System.currentTimeMillis();
-        quickSortOld(big2,0,big2.length-1);
-	long endTime2 = System.currentTimeMillis();
-	System.out.println("Time for quickSortOld on random array: " +(endTime2-startTime2));
+	
+	
+	int[]a = new int [4000000];
+	for (int x = 0; x < a.length;x++){
+	    a[x] = (int)Math.random()*4;
+	}
+	//fill with random values from 0 to 3 inclusive
+
+	double startTime1 = System.currentTimeMillis();
+        Arrays.sort(a);
+	double endTime1 = System.currentTimeMillis();
+	System.out.println("System: " +(endTime1-startTime1)/1000.0);
+	
+	double startTime2 = System.currentTimeMillis();
+        quickSortOld(a,0,a.length-1);
+	double endTime2 = System.currentTimeMillis();
+	System.out.println("quickSortOld: " +(endTime2-startTime2)/1000.0);
+
+	double startTime3 = System.currentTimeMillis();
+        quickSort(a,0,a.length-1);
+	double endTime3 = System.currentTimeMillis();
+	System.out.println("quickSort: " +(endTime3-startTime3)/1000.0);
+	/*
+	
+	if (args[0].equals("a") && args[1].equals("array")){
+	    Arrays.sort(a);
+	    printArray(a);
+	}
+	if (args[0].equals("a") && args[1].equals("old")){
+	    quickSortOld(a,0,a.length-1);
+	    printArray(a);
+	}
+	if (args[0].equals("a") && args[1].equals("new")){
+	    quickSort(a,0,a.length-1);
+	    printArray(a);
+	}	
+	
 	*/
 	
-    }
+	int[]b = new int [4000000];
+	for (int x = 0; x < b.length;x++){
+	    b[x] = (int)Math.random()*Integer.MIN_VALUE + (int)Math.random()*Integer.MAX_VALUE;
+	}
+	//fill with random values from Integer.MIN_VALUE to Integer.MAX_VALUE
+
+	double startTime5 = System.currentTimeMillis();
+        Arrays.sort(a);
+	double endTime5 = System.currentTimeMillis();
+	System.out.println("System: " +(endTime5-startTime5)/1000.0);
+	
+	double startTime4 = System.currentTimeMillis();
+        quickSortOld(a,0,a.length-1);
+	double endTime4 = System.currentTimeMillis();
+	System.out.println("quickSortOld: " +(endTime4-startTime4)/1000.0);
+
+	double startTime6 = System.currentTimeMillis();
+        quickSort(a,0,a.length-1);
+	double endTime6 = System.currentTimeMillis();
+	System.out.println("quickSort: " +(endTime6-startTime6)/1000.0);
+	
+	/*
+	if (args[0].equals("b") && args[1].equals("array")){
+	    Arrays.sort(b);
+	    printArray(b);
+	}
+	if (args[0].equals("b") && args[1].equals("old")){
+	    quickSortOld(b,0,b.length-1);
+	    printArray(b);
+	}
+	if (args[0].equals("b") && args[1].equals("new")){
+	    quickSort(b,0,b.length-1);
+	    printArray(b);
+	}	
+	
+	*/
+    } 
 }
