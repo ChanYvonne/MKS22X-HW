@@ -54,71 +54,73 @@ public class Quick{
 	double randnum = Math.random()*(right-left+1);
 	int index = left + (int)randnum;
 	int value = data[index];
-	System.out.println(value);
-	int rightIndex = right-left;
-	int leftIndex = 0;
+	//System.out.println(value);
+	int rightIndex = right-1;
+	int leftIndex = left;
 	int[] limits = new int[2];
 	if (left == right){
 	    limits[0] = left;
 	    limits[1] = right;
-	}else{
-	    
-	    //tried so many different mehtods before getting it right!!
-
-	    //int counter = 0;
-	    swap(data,index,right);	
-	    //printArray(data);
-	    while (leftIndex < rightIndex){
-		if (data[leftIndex] > value){
-		    swap(data,leftIndex,rightIndex);
-		    rightIndex--;
-		}else{
-		    leftIndex++;
-		}
-	    }
-	    if (data[rightIndex] < data[right]){
-		swap(data,right,rightIndex-1);
-		rightIndex--;
-		limits[0] = rightIndex;
-		limits[1] = rightIndex;
-	    }else{
-		swap(data,right,rightIndex);
-		limits[0] = rightIndex;
-		limits[1] = rightIndex;
-	    }
-	    //printArray(data);
-	    for (int i = 0; i < rightIndex; i++){
-		if (data[i] == value){
-		    swap(data,i,rightIndex-1);
-		    limits[0] = rightIndex-1;
-		    rightIndex--;
-		}
-	    }
-	    /*
-	    
-	      int[] sorted = new int[right-left+1];
-	      for (int x = left; x <= right; x++){
-		  if (data[x] < value){
-		      sorted[leftIndex] = data[x];
-		      leftIndex++;
-		  }else{
-		      sorted[rightIndex] = data[x];
-		      rightIndex--;
-		  }
-	      }
-	      for (int i = leftIndex; i <= rightIndex; i++){
-		  sorted[i] = value;
-	      }
-
-	      limits[1] = leftIndex;
-	      limits[0] = rightIndex;
-	      
-	      for (int i = left; i < sorted.length;i++){
-		  data[i] = sorted[i];
-	      }
-	    */
+	    return limits;
 	}
+	//tried so many different mehtods before getting it right!!
+
+	//int counter = 0;
+	swap(data,index,right);	
+	//printArray(data);
+	while (leftIndex < rightIndex){
+	    if (data[leftIndex] > value){
+		swap(data,leftIndex,rightIndex);
+		rightIndex--;
+	    }else{
+		leftIndex++;
+	    }
+	}
+	if (data[leftIndex] < data[right]){
+	    swap(data,right,leftIndex-1);
+	    leftIndex--;
+	    limits[0] = leftIndex;
+	    limits[1] = leftIndex;
+	}else{
+	    swap(data,right,leftIndex);
+	    limits[0] = leftIndex;
+	    limits[1] = leftIndex;
+	}
+	//printArray(data);
+	for (int i = leftIndex-1; i >= 0; i--){
+	    if (data[i] == value){
+		leftIndex--;
+		swap(data,i,leftIndex);
+	    }
+	}
+	limits[0] = leftIndex;
+	limits[1] = rightIndex;
+	       /*
+	    
+	  int[] sorted = new int[right-left+1];
+	  for (int x = left; x <= right; x++){
+	  if (data[x] < value){
+	  sorted[leftIndex] = data[x];
+	  leftIndex++;
+	  }else{
+	  sorted[rightIndex] = data[x];
+	  rightIndex--;
+	  }
+	  }
+	  for (int i = leftIndex; i <= rightIndex; i++){
+	  sorted[i] = value;
+	  }
+
+	  limits[1] = leftIndex;
+	  limits[0] = rightIndex;
+	      
+	  for (int i = left; i < sorted.length;i++){
+	  data[i] = sorted[i];
+	  }
+	*/
+	
 	printArray(data);
+	//printArray(limits);
 	return limits;
     }
 
@@ -249,7 +251,7 @@ public class Quick{
 	System.out.println(quickselectOld(test,1)); //-6
 	System.out.println(quickselectOld(test,7)); //5	
 	
-	
+	*/
 	//quicksort test cases
 	printArray(test);
         quickSort(test,0,test.length-1);
@@ -270,7 +272,7 @@ public class Quick{
 	quickSort(test6,0,test6.length-1);
 	printArray(test6);
 	
-	*/
+	
 	
 	/*
 	int[]d = new int [4000000];
@@ -287,7 +289,7 @@ public class Quick{
 
 	
 	
-	
+	/*
 	int[]a = new int [4000000];
 	for (int x = 0; x < a.length;x++){
 	    a[x] = (int)Math.random()*4;
@@ -308,7 +310,7 @@ public class Quick{
         quickSort(a,0,a.length-1);
 	double endTime3 = System.currentTimeMillis();
 	System.out.println("quickSort: " +(endTime3-startTime3)/1000.0);
-	/*
+	
 	
 	if (args[0].equals("a") && args[1].equals("array")){
 	    Arrays.sort(a);
@@ -324,7 +326,8 @@ public class Quick{
 	}	
 	
 	*/
-	
+
+	/*
 	int[]b = new int [4000000];
 	for (int x = 0; x < b.length;x++){
 	    b[x] = (int)Math.random()*Integer.MIN_VALUE + (int)Math.random()*Integer.MAX_VALUE;
@@ -346,7 +349,7 @@ public class Quick{
 	double endTime6 = System.currentTimeMillis();
 	System.out.println("quickSort: " +(endTime6-startTime6)/1000.0);
 	
-	/*
+	
 	if (args[0].equals("b") && args[1].equals("array")){
 	    Arrays.sort(b);
 	    printArray(b);
