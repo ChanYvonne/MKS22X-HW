@@ -54,7 +54,7 @@ public class Quick{
 	double randnum = Math.random()*(right-left+1);
 	int index = left + (int)randnum;
 	int value = data[index];
-	//System.out.println(value);
+	System.out.println(value);
 	//int[] limits = new int[2];
 	/*
 	if (left == right){
@@ -87,7 +87,7 @@ public class Quick{
 	    swap(data,left,rightIndex);
 	    index = rightIndex;
 	}
-
+	printArray(data);
 	for (int x = left; x < index; x++){
 	    if (data[x] == value){
 		leftIndex--;
@@ -155,7 +155,7 @@ public class Quick{
 	  }
 	*/
 	
-	printArray(data);
+	//printArray(data);
 	//printArray(limits);
 	return index;
     }
@@ -238,7 +238,7 @@ public class Quick{
 	}
     }
 
-    public static void printArray(int[]data){
+    public static void printArray(int[] data){
         String ans = "";
 	for (int x = 0; x < data.length; x ++){
 	    if (x == data.length-1){
@@ -262,8 +262,16 @@ public class Quick{
 	int[] test5 = {0,6,3,68,9,7,4,5,1,8,2};
 	int[] test6 = {0,0,0,0,0,0,0};
 
-	/*
+	
 	//partition test cases
+	int [] test7 = new int[20];
+	for (int x = 0; x < test7.length;x++){
+	    test7[x] = x%5;
+	}
+	
+	partition(test7,0,test7.length-1);
+	printArray(test7);
+	/*
 	printArray(partition(test,0,test.length-1));
 	printArray(partition(test2,0,test2.length-1));
 	printArray(partition(test4,0,test4.length-1));
@@ -311,7 +319,7 @@ public class Quick{
 	*/
 	
 	
-	
+	/*
 	int[]d = new int [4000000];
 	int[] c = new int [d.length];
 
@@ -324,7 +332,7 @@ public class Quick{
 	System.out.println("Done: Sorted="+Arrays.equals(d,c));
 	
 
-	
+	*/
 	
 	/*
 	int[]a = new int [4000000];
