@@ -238,6 +238,10 @@ public class Quick{
 	}
     }
 
+    public static void quickSort(int[] data){
+	quickSort(data,0,data.length-1);
+    }
+
     public static void printArray(int[]data){
         String ans = "";
 	for (int x = 0; x < data.length; x ++){
@@ -287,7 +291,7 @@ public class Quick{
 	System.out.println(quickselectOld(test,1)); //-6
 	System.out.println(quickselectOld(test,7)); //5	
 	
-	
+	*/
 	//quicksort test cases
       
 	printArray(test);
@@ -308,10 +312,10 @@ public class Quick{
 	printArray(test6);
 	quickSort(test6,0,test6.length-1);
 	printArray(test6);
-	*/
 	
 	
 	
+	/*
 	int[]d = new int [4000000];
 	int[] c = new int [d.length];
 
@@ -322,7 +326,7 @@ public class Quick{
 	quickSort(d,0,d.length-1); //or even your old quicksort!!!
 	Arrays.sort(c);
 	System.out.println("Done: Sorted="+Arrays.equals(d,c));
-	
+	*/
 
 	
 	
