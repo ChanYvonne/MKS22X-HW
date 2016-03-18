@@ -144,3 +144,13 @@ public class MyLinkedList{
 	System.out.println(test);
     }
 }
+
+/* 
+notes from class:
+
+set/get(index i) --> O(i)
+size --> O(1)
+add/remove(v,index i) --> O(i) --> modifying the front O(1)
+add(v) --> O(1)
+indexOf(v)-->0(n)
+*/
