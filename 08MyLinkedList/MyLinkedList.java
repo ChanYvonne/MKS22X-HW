@@ -1,38 +1,38 @@
 import java.util.*;
 
-public class MyLinkedList{
-    private class LNode{
-	int value;
+public class MyLinkedList<T>{
+    private class LNode<T>{
+        T value;
 	LNode next;
 	
-	public LNode(int val){
+	public LNode(T val){
 	    value = val;
 	}
 	
-	public int getValue(){
+	public T getValue(){
 	    return value;
 	}
 
-	public LNode getNext(){
+	public LNode<T> getNext(){
 	    return next;
 	}
 	
-	public void setValue(int newValue){
+	public void setValue(T newValue){
 	    value = newValue;
 	}
 	
-	public void setNext(LNode newValue){
+	public void setNext(LNode<T> newValue){
 	    next = newValue;
 	}
     }
 
-    LNode start;
-    LNode last;
+    LNode<T> start;
+    LNode<T> last;
     int size;
    
     public String toString(){
 	String ans = "[";
-	LNode current = start;
+	LNode<T> current = start;
         while (current != null){
 	    ans += current.getValue();
 	    if (current.getNext() != null){
@@ -43,12 +43,12 @@ public class MyLinkedList{
 	return ans + "]";
     }
 
-    public boolean add(int value){
+    public boolean add (T value){
 	if (start == null){
-	    start = new LNode(value);
+	    start = new LNode<T>(value);
 	    last = start;
 	}else{
-	    LNode temp = new LNode(value);
+	    LNode<T> temp = new LNode<T>(value);
 	    last.setNext(temp);
 	    last = last.getNext();
 	}
@@ -57,10 +57,10 @@ public class MyLinkedList{
 	return true;
     }
 
-    public boolean add(int index, int value){
-	LNode current = start;
+    public boolean add(int index, T value){
+	LNode<T> current = start;
 	int count = 0;
-	LNode temp = new LNode(value);
+	LNode<T> temp = new LNode<T>(value);
 	if (index == 0){
 	    temp.setNext(current);
 	    start = temp;
@@ -69,7 +69,7 @@ public class MyLinkedList{
 		current = current.getNext();
 		count++;
 	    }
-	    LNode next = current.getNext();
+	    LNode<T> next = current.getNext();
 	    temp.setNext(next);
 	    current.setNext(temp);
 	}
@@ -77,9 +77,9 @@ public class MyLinkedList{
 	return true;
     }
 
-    public int remove(int index){
-	int oldValue = -1;
-	LNode current = start;
+    public T remove(int index){
+        T oldValue;
+	LNode<T> current = start;
 	int count = 0;
 	//LNode temp = current.getNext();
 	if (index == 0){
@@ -97,9 +97,9 @@ public class MyLinkedList{
 	return oldValue;
     }
     
-    public int get(int index){
-	int value = 0;
-	LNode current = start;
+    public T get(int index){
+        T value;
+	LNode<T> current = start;
 	int count = 0;
         while (count != index){
 	    current = current.getNext();
@@ -109,9 +109,9 @@ public class MyLinkedList{
 	return value;
     }
     
-    public int set(int index, int newValue){
-	int oldValue = get(index);
-	LNode current = start;
+    public T set(int index, T newValue){
+        T oldValue = get(index);
+	LNode<T> current = start;
         int count = 0;
         while (current.getNext() != null){
 	    if (count == index){
@@ -128,7 +128,7 @@ public class MyLinkedList{
 	return size;
     }
 
-    public int indexOf(int value){
+    public int indexOf(T value){
 	int index = 0;
 	LNode current = start;
 	while (current.getValue() != value){
@@ -152,7 +152,7 @@ public class MyLinkedList{
 
     public static void main(String[]args){
 	
-	MyLinkedList test = new MyLinkedList();
+	MyLinkedList<Integer> test = new MyLinkedList<Integer>();
 	System.out.println(test);
 	int i = 0;
 	while(i < 10){
