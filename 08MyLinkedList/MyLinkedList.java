@@ -86,14 +86,12 @@ public class MyLinkedList{
 	    oldValue = current.getValue();
 	    start = start.getNext();
 	}else{
-	    while (current.getNext()!= null){
-		if (count == index-1){
-		    oldValue = (current.getNext()).getValue();
-		    current.setNext((current.getNext()).getNext());
-		}
+	    while (count < index-1){
 		current = current.getNext();
 		count++;
 	    }
+	    oldValue = (current.getNext()).getValue();
+	    current.setNext((current.getNext()).getNext());
 	}
 	size--;
 	return oldValue;
@@ -153,7 +151,7 @@ public class MyLinkedList{
     }
 
     public static void main(String[]args){
-	/*
+	
 	MyLinkedList test = new MyLinkedList();
 	System.out.println(test);
 	int i = 0;
@@ -178,29 +176,10 @@ public class MyLinkedList{
 	System.out.println(test);
 	System.out.println(test.add(0,31));
 	System.out.println(test);
-	*/
-	/*
-	MyLinkedList m = new MyLinkedList();
-	ArrayList<Integer> n = new ArrayList<Integer>();
-
-	long start,end;
-
-	start = System.currentTimeMillis();
-	for (long x = 0; x < 100;x++){
-	    n.add(Math.random()*1000); 
-	}
-	end = System.currentTimeMillis();
-	System.out.println("Time: " + (end-start)/1000.0 + " seconds for ArrayList");
-	printArray(n);
-
-	start = System.currentTimeMillis();
-        for (long i = 0; i < 100;i++){
-	    m.add(Math.random()*1000); 
-	}
-	end = System.currentTimeMillis();
-	System.out.println("Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
-	System.out.println(m);
-	*/
+	
+	
+	
+	
     }
 }
 
