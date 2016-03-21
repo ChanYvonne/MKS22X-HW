@@ -1,7 +1,9 @@
+import java.util.*;
+
 public class MyLinkedList{
     private class LNode{
 	int value;
-	int next;
+	LNode next;
 	
 	public LNode(int val){
 	    value = val;
@@ -11,7 +13,7 @@ public class MyLinkedList{
 	    return value;
 	}
 
-	public int getNext(){
+	public LNode getNext(){
 	    return next;
 	}
 	
@@ -19,21 +21,22 @@ public class MyLinkedList{
 	    value = newValue;
 	}
 	
-	public void setNext(int newValue){
+	public void setNext(LNode newValue){
 	    next = newValue;
 	}
     }
 
     LNode start;
+    LNode last;
     int size;
    
     public String toString(){
 	String ans = "[";
 	LNode current = start;
-        while (current!= 0){
-	    ans += start.getValue();
+        while (current != null){
+	    ans += current.getValue();
 	    if (current.getNext() != null){
-		ans+= ", "
+		ans+= ", ";
 	    }
 	    current = current.getNext();
 	}
@@ -41,74 +44,85 @@ public class MyLinkedList{
     }
 
     public boolean add(int value){
-	boolean ans = false;
 	if (start == null){
 	    start = new LNode(value);
+	    last = start;
 	}else{
-	    LNode current = start;
-	}	
-	
-        for (int x = 0; x < size(); x++){
-	    if (current.getNext() == 0 && x == size()-2){
-	        current.setNext(value);
-		ans = true;
-	    }
-	    current.setValue(current.getNext());	    
+	    LNode temp = new LNode(value);
+	    last.setNext(temp);
+	    last = last.getNext();
 	}
-	start = current;
-	return ans;
+        size++;
+	//start = current;
+	return true;
     }
 
     public boolean add(int index, int value){
-	boolean done = false;
 	LNode current = start;
-        for (int x = 0; x < size(); x++){
-	    current.setValue(current.getNext());
-	    if (x == index){
-		current.setValue(value);
-		done = true;
+	int count = 0;
+	LNode temp = new LNode(value);
+	if (index == 0){
+	    temp.setNext(current);
+	    start = temp;
+	}else{
+	    while (count < index-1){
+		current = current.getNext();
+		count++;
 	    }
+	    LNode next = current.getNext();
+	    temp.setNext(next);
+	    current.setNext(temp);
 	}
-	start = current;
-	return done;
+	size++;
+	return true;
     }
 
     public int remove(int index){
-	int oldValue = 0;
+	int oldValue = -1;
 	LNode current = start;
-	for (int x = 0; x < size(); x++){
-	    if (x == index){
-		oldValue = current.getValue();
-	    }else{
-		current.setValue(current.getNext());
+	int count = 0;
+	//LNode temp = current.getNext();
+	if (index == 0){
+	    oldValue = current.getValue();
+	    start = start.getNext();
+	}else{
+	    while (current.getNext()!= null){
+		if (count == index-1){
+		    oldValue = (current.getNext()).getValue();
+		    current.setNext((current.getNext()).getNext());
+		}
+		current = current.getNext();
+		count++;
 	    }
 	}
+	size--;
 	return oldValue;
     }
     
     public int get(int index){
 	int value = 0;
 	LNode current = start;
-        for (int x = 0; x < size(); x++){
-	    if (x == index){
-		value = current.getValue();
-	    }
-	    current.setValue(current.getNext());
+	int count = 0;
+        while (count != index){
+	    current = current.getNext();
+	    count++;
 	}
-	start = current;
+	value = current.getValue();
 	return value;
     }
     
     public int set(int index, int newValue){
 	int oldValue = get(index);
 	LNode current = start;
-        for (int x = 0; x < size(); x++){
-	    if (x == index-1){
-		current.setNext(newValue);
+        int count = 0;
+        while (current.getNext() != null){
+	    if (count == index){
+		oldValue = current.getValue();
+		current.setValue(newValue);
 	    }
-	    current.setValue(current.getNext());
+	    current = current.getNext();
+	    count++;
 	}
-	start = current;
 	return oldValue;
     }
 
@@ -117,31 +131,76 @@ public class MyLinkedList{
     }
 
     public int indexOf(int value){
-	int ans = -1;
+	int index = 0;
 	LNode current = start;
-	int count = 0;
-	while (count < size() && ans == -1){
-	    if (current.getValue() == value){
-		ans = count;
-	    }
-	    count++;
-	    current.setValue(current.getNext());
+	while (current.getValue() != value){
+	    current = current.getNext();
+	    index++;
 	}
-	start = current;
-	return ans;
+	return index;
+    }
+
+    public static void printArray(int[]data){
+        String ans = "";
+	for (int x = 0; x < data.length; x ++){
+	    if (x == data.length-1){
+		ans+= " " + data[x];
+	    }else{
+		ans+= " " + data[x] + ",";
+	    }
+	}
+	System.out.println("[" + ans + "]");	
     }
 
     public static void main(String[]args){
+	/*
 	MyLinkedList test = new MyLinkedList();
+	System.out.println(test);
 	int i = 0;
-	while(i < 100){
+	while(i < 10){
 	    test.add(i);
 	    i++;
 	}
 	test.add(54);
 	test.add(-10);
 	test.add(47);
+	test.add(6);
 	System.out.println(test);
+	System.out.println(test.get(3));
+	System.out.println(test.set(7,99));
+	System.out.println(test);
+	System.out.println(test.indexOf(9));
+	System.out.println(test.remove(4));
+	System.out.println(test);
+	System.out.println(test.add(8,23));
+	System.out.println(test);
+	System.out.println(test.remove(0));
+	System.out.println(test);
+	System.out.println(test.add(0,31));
+	System.out.println(test);
+	*/
+	/*
+	MyLinkedList m = new MyLinkedList();
+	ArrayList<Integer> n = new ArrayList<Integer>();
+
+	long start,end;
+
+	start = System.currentTimeMillis();
+	for (long x = 0; x < 100;x++){
+	    n.add(Math.random()*1000); 
+	}
+	end = System.currentTimeMillis();
+	System.out.println("Time: " + (end-start)/1000.0 + " seconds for ArrayList");
+	printArray(n);
+
+	start = System.currentTimeMillis();
+        for (long i = 0; i < 100;i++){
+	    m.add(Math.random()*1000); 
+	}
+	end = System.currentTimeMillis();
+	System.out.println("Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
+	System.out.println(m);
+	*/
     }
 }
 
