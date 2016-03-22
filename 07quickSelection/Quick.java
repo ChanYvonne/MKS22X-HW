@@ -50,115 +50,7 @@ public class Quick{
 	return index;
     }
 
-    private static int partition(int[]data, int left, int right){
-	double randnum = Math.random()*(right-left+1);
-	int index = left + (int)randnum;
-	int value = data[index];
-	//System.out.println(value);
-	//int[] limits = new int[2];
-	/*
-	if (left == right){
-	    limits[0] = left;
-	    limits[1] = right;
-	    return limits;
-	}
-	*/
-	//tried so many different mehtods before getting it right!!
-
-	//int counter = 0;
-	
-	//printArray(data);
-	int rightIndex = right;
-	int leftIndex = left+1;
-	swap(data,index,left);
-	while (leftIndex < rightIndex){
-	    if (data[leftIndex] > value){
-		swap(data,leftIndex,rightIndex);
-		rightIndex--;
-	    }else{
-		leftIndex++;
-	    }
-	}
-        if (data[rightIndex] > data[left]){
-	    rightIndex--;
-	    swap(data,left,rightIndex);
-	    index = rightIndex;
-	}else{
-	    swap(data,left,rightIndex);
-	    index = rightIndex;
-	}
-
-	for (int x = left; x < index; x++){
-	    if (data[x] == value){
-		leftIndex--;
-		swap(data,x,leftIndex);		
-	    }
-	}
-	index = (leftIndex+rightIndex)/2;
-	
-	//printArray(data);
-	/* 
-	//method of returning an int ary
-	  swap(data,index,right);
-	while (leftIndex < rightIndex){
-	    if (data[leftIndex] > value){
-		swap(data,leftIndex,rightIndex);
-		rightIndex--;
-	    }else{
-		leftIndex++;
-	    }
-	}
-	if (data[leftIndex] > data[right]){
-	    swap(data,right,leftIndex+1);
-	    rightIndex++;
-	    leftIndex++;
-	    //index = leftIndex+1;
-	    limits[0] = leftIndex+1;
-	    limits[1] = leftIndex+1;
-	}else{
-	    swap(data,right,leftIndex);
-	    //index = leftIndex;
-	    limits[0] = leftIndex;
-	    limits[1] = leftIndex;
-	}
-
-	
-	for (int i = leftIndex-1; i >= 0; i--){
-	    if (data[i] == value){
-		leftIndex--;
-		swap(data,i,leftIndex);
-	    }
-	}
-
-	limits[0] = leftIndex;
-	
-        
-	  int[] sorted = new int[right-left+1];
-	  for (int x = left; x <= right; x++){
-	  if (data[x] < value){
-	  sorted[leftIndex] = data[x];
-	  leftIndex++;
-	  }else{
-	  sorted[rightIndex] = data[x];
-	  rightIndex--;
-	  }
-	  }
-	  for (int i = leftIndex; i <= rightIndex; i++){
-	  sorted[i] = value;
-	  }
-
-	  limits[1] = leftIndex;
-	  limits[0] = rightIndex;
-	      
-	  for (int i = left; i < sorted.length;i++){
-	  data[i] = sorted[i];
-	  }
-	*/
-	
-	printArray(data);
-	//printArray(limits);
-	return index;
-    }
+    
 
     private static void swap(int[] data, int spotA, int spotB){
 	int value = data[spotA];
@@ -173,9 +65,7 @@ public class Quick{
     // when k = 0 return the smallest.
     // 0 <= k < data.length
     
-    public static int quickselect(int[]data, int k){
-	return quickselect(data,k,0,data.length-1);
-    }
+    
 
     // helper method for quickselect recursive
     private static int quickselectOld(int[]data, int k, int left, int right){
@@ -207,20 +97,6 @@ public class Quick{
 	}
     }
 
-    private static int quickselect(int[]data, int k, int left, int right){
-	//printArray(data);
-	int index = partition(data, left, right);
-	//System.out.println(index);
-	if (index == k){
-	    return data[index];
-	}
-	if (index < k){
-	    return quickselect(data,k,index+1,right);
-	}else{
-	    return quickselect(data,k,left,index-1);
-	}
-    }
-    
     public static void quickSortOld(int[] data,int left, int right){
 	if (right-left > 1){
 	    int index = partitionOld(data,left,right);
@@ -229,12 +105,143 @@ public class Quick{
 	}
     }
     //chooses a partition element and then sorts either side recursively
+
+
+    /*-----------------NEW STUFF----------------------------------------*/
+
+    
+    private static int[] partition(int[]data, int left, int right){
+	double randnum = Math.random()*(right-left+1);
+	int index = left + (int)randnum;
+	int value = data[index];
+	//System.out.println(value);
+	int[] limits = new int[2];
+	
+	if (left == right){
+	    limits[0] = left;
+	    limits[1] = right;
+	    return limits;
+	}	
+	//printArray(data);
+
+	//method of returning an int ary
+	int leftIndex = left;
+	int rightIndex = right-1;
+	swap(data,index,right);
+	while (leftIndex < rightIndex){
+	    if (data[leftIndex] < value){
+		leftIndex++;
+	    }else{
+		swap(data,leftIndex,rightIndex);
+		rightIndex--;
+	    }
+	}
+	if (data[leftIndex] < data[right]){
+	    rightIndex++;
+	    leftIndex++;
+	    swap(data,right,leftIndex);	    
+	}else{
+	    swap(data,right,leftIndex);
+	}
+
+	limits[0] = leftIndex;
+	limits[1] = leftIndex;
+	
+	for (int i = leftIndex; i < right; i++){
+	    if (data[i] == value){
+		swap(data,i,leftIndex);
+		leftIndex++;
+	    }
+	}
+
+	limits[0] = leftIndex;
+	
+	/*
+	int rightIndex = right;
+	int leftIndex = left+1;
+	swap(data,index,left);
+	while (leftIndex < rightIndex){
+	    if (data[leftIndex] > value){
+		swap(data,leftIndex,rightIndex);
+		rightIndex--;
+	    }else{
+		leftIndex++;
+	    }
+	}
+        if (data[rightIndex] > data[left]){
+	    rightIndex--;
+	    swap(data,left,rightIndex);
+	    index = rightIndex;
+	}else{
+	    swap(data,left,rightIndex);
+	    index = rightIndex;
+	}
+
+	for (int x = left; x < index; x++){
+	    if (data[x] == value){
+		leftIndex--;
+		swap(data,x,leftIndex);		
+	    }
+	}
+	index = (leftIndex+rightIndex)/2;
+	*/
+	//printArray(data);
+	 
+	
+	/*
+        
+	int[] sorted = new int[right-left+1];
+	for (int x = left; x <= right; x++){
+	    if (data[x] < value){
+		sorted[leftIndex] = data[x];
+		leftIndex++;
+	    }else{
+		sorted[rightIndex] = data[x];
+		rightIndex--;
+	    }
+	}
+	for (int i = leftIndex; i <= rightIndex; i++){
+	    sorted[i] = value;
+	}
+
+	limits[1] = leftIndex;
+	limits[0] = rightIndex;
+	      
+	for (int i = left; i < sorted.length;i++){
+	    data[i] = sorted[i];
+	}
+	*/
+	
+	//printArray(data);
+	//printArray(limits);
+	return limits;
+    }
+
+    
+    private static int quickselect(int[]data, int k, int left, int right){
+	//printArray(data);
+	int index[] = partition(data, left, right);
+	//System.out.println(index);
+	if (index[0] == k){
+	    return data[index[0]];
+	}
+	if (index[0] < k){
+	    return quickselect(data,k,index[0]+1,right);
+	}else{
+	    return quickselect(data,k,left,index[0]-1);
+	}
+    }
+    
+    public static int quickselect(int[]data, int k){
+	return quickselect(data,k,0,data.length-1);
+    }
+
     
     public static void quickSort(int[] data,int left, int right){
 	if (right-left > 1){
-	    int index = partition(data,left,right);
-	    quickSort(data,left,index-1);
-	    quickSort(data,index+1,right);
+	    int[] index = partition(data,left,right);
+	    quickSort(data,left,index[0]-1);
+	    quickSort(data,index[1]+1,right);
 	}
     }
 
@@ -265,7 +272,7 @@ public class Quick{
 	int[] test4 = {9,2,23,23,132,83,23,74,90,53,-3,0,1,6,2};
 	int[] test5 = {0,6,3,68,9,7,4,5,1,8,2};
 	int[] test6 = {0,0,0,0,0,0,0};
-
+	
 	/*
 	//partition test cases
 	printArray(partition(test,0,test.length-1));
@@ -274,6 +281,8 @@ public class Quick{
 	printArray(partition(test3,1,test3.length-1));
 	printArray(partition(test5,0,test5.length-1));
 	printArray(partition(test6,0,test6.length-1));
+
+	
 	
         printArray(partition(test,0,7));
 	printArray(partition(test2,3,8));
@@ -291,7 +300,7 @@ public class Quick{
 	System.out.println(quickselectOld(test,1)); //-6
 	System.out.println(quickselectOld(test,7)); //5	
 	
-	*/
+	
 	//quicksort test cases
       
 	printArray(test);
@@ -312,11 +321,11 @@ public class Quick{
 	printArray(test6);
 	quickSort(test6,0,test6.length-1);
 	printArray(test6);
-	
+	*/
 	
 	
 	/*
-	int[]d = new int [4000000];
+	int[]d = new int [400000];
 	int[] c = new int [d.length];
 
 	for(int i = 0; i < d.length; i++){
