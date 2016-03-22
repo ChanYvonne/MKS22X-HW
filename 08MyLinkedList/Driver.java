@@ -7,7 +7,7 @@ public class Driver{
 	long start,end;
 
 	start = System.currentTimeMillis();
-	for (int x = 0; x < 1000000;x++){
+	for (int x = 0; x < 10000;x++){
 	    n.add(x); 
 	}
 	end = System.currentTimeMillis();
@@ -15,14 +15,14 @@ public class Driver{
         
 
 	start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000;i++){
+        for (int i = 0; i < 10000;i++){
 	    m.add(new Integer(i)); 
 	}
 	end = System.currentTimeMillis();
 	System.out.println("Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
 
 	start = System.currentTimeMillis();
-	for (int x = 0; x < 1000000;x++){
+	for (int x = 0; x < 10000;x++){
 	    n.size(); 
 	}
 	end = System.currentTimeMillis();
@@ -30,14 +30,14 @@ public class Driver{
         
 
 	start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000;i++){
+        for (int i = 0; i < 10000;i++){
 	    m.size(); 
 	}
 	end = System.currentTimeMillis();
 	System.out.println("size time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
 
 	start = System.currentTimeMillis();
-	for (int x = 0; x < 1000000;x++){
+	for (int x = 0; x < 10000;x++){
 	    n.add(0,7); 
 	}
 	end = System.currentTimeMillis();
@@ -45,7 +45,7 @@ public class Driver{
         
 
 	start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000;i++){
+        for (int i = 0; i < 10000;i++){
 	    m.add(0,new Integer(10)); 
 	}
 	end = System.currentTimeMillis();
@@ -53,7 +53,7 @@ public class Driver{
 
 	
 	start = System.currentTimeMillis();
-	for (int x = 0; x < 1000000;x++){
+	for (int x = 0; x < 10000;x++){
 	    n.remove(0); 
 	}
 	end = System.currentTimeMillis();
@@ -61,7 +61,7 @@ public class Driver{
         
 
 	start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000;i++){
+        for (int i = 0; i < 10000;i++){
 	    m.remove(0); 
 	}
 	end = System.currentTimeMillis();

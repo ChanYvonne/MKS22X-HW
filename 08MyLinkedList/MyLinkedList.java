@@ -62,8 +62,8 @@ public class MyLinkedList<T>{
 	int count = 0;
 	LNode temp = new LNode(value);
 	if (index == 0){
-	    temp.setNext(current);
 	    start = temp;
+	    start.setNext(current);
 	}else{
 	    while (count < index-1){
 		current = current.getNext();
