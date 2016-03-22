@@ -1,7 +1,7 @@
 import java.util.*;
 public class Driver{
     public static void main(String[]args){
-	MyLinkedList m = new MyLinkedList();
+	MyLinkedList<Integer> m = new MyLinkedList<Integer>();
 	ArrayList<Integer> n = new ArrayList<Integer>();
 
 	long start,end;
@@ -16,7 +16,7 @@ public class Driver{
 
 	start = System.currentTimeMillis();
         for (int i = 0; i < 1000000;i++){
-	    m.add(i); 
+	    m.add(new Integer(i)); 
 	}
 	end = System.currentTimeMillis();
 	System.out.println("Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");
@@ -46,7 +46,7 @@ public class Driver{
 
 	start = System.currentTimeMillis();
         for (int i = 0; i < 1000000;i++){
-	    m.add(0,10); 
+	    m.add(0,new Integer(10)); 
 	}
 	end = System.currentTimeMillis();
 	System.out.println("add Time: " + (end-start)/1000.0 + " seconds for MyLinkedList");

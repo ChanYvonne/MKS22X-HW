@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class MyLinkedList<T>{
-    private class LNode<T>{
+    private class LNode{
         T value;
 	LNode next;
 	
@@ -13,7 +13,7 @@ public class MyLinkedList<T>{
 	    return value;
 	}
 
-	public LNode<T> getNext(){
+	public LNode getNext(){
 	    return next;
 	}
 	
@@ -21,18 +21,18 @@ public class MyLinkedList<T>{
 	    value = newValue;
 	}
 	
-	public void setNext(LNode<T> newValue){
+	public void setNext(LNode newValue){
 	    next = newValue;
 	}
     }
 
-    LNode<T> start;
-    LNode<T> last;
+    LNode start;
+    LNode last;
     int size;
    
     public String toString(){
 	String ans = "[";
-	LNode<T> current = start;
+	LNode current = start;
         while (current != null){
 	    ans += current.getValue();
 	    if (current.getNext() != null){
@@ -45,10 +45,10 @@ public class MyLinkedList<T>{
 
     public boolean add (T value){
 	if (start == null){
-	    start = new LNode<T>(value);
+	    start = new LNode(value);
 	    last = start;
 	}else{
-	    LNode<T> temp = new LNode<T>(value);
+	    LNode temp = new LNode(value);
 	    last.setNext(temp);
 	    last = last.getNext();
 	}
@@ -58,9 +58,9 @@ public class MyLinkedList<T>{
     }
 
     public boolean add(int index, T value){
-	LNode<T> current = start;
+	LNode current = start;
 	int count = 0;
-	LNode<T> temp = new LNode<T>(value);
+	LNode temp = new LNode(value);
 	if (index == 0){
 	    temp.setNext(current);
 	    start = temp;
@@ -69,7 +69,7 @@ public class MyLinkedList<T>{
 		current = current.getNext();
 		count++;
 	    }
-	    LNode<T> next = current.getNext();
+	    LNode next = current.getNext();
 	    temp.setNext(next);
 	    current.setNext(temp);
 	}
@@ -79,7 +79,7 @@ public class MyLinkedList<T>{
 
     public T remove(int index){
         T oldValue;
-	LNode<T> current = start;
+	LNode current = start;
 	int count = 0;
 	//LNode temp = current.getNext();
 	if (index == 0){
@@ -99,7 +99,7 @@ public class MyLinkedList<T>{
     
     public T get(int index){
         T value;
-	LNode<T> current = start;
+	LNode current = start;
 	int count = 0;
         while (count != index){
 	    current = current.getNext();
@@ -111,7 +111,7 @@ public class MyLinkedList<T>{
     
     public T set(int index, T newValue){
         T oldValue = get(index);
-	LNode<T> current = start;
+	LNode current = start;
         int count = 0;
         while (current.getNext() != null){
 	    if (count == index){
@@ -131,7 +131,7 @@ public class MyLinkedList<T>{
     public int indexOf(T value){
 	int index = 0;
 	LNode current = start;
-	while (current.getValue() != value){
+	while (!(current.getValue().equals(value))){
 	    current = current.getNext();
 	    index++;
 	}
@@ -156,25 +156,25 @@ public class MyLinkedList<T>{
 	System.out.println(test);
 	int i = 0;
 	while(i < 10){
-	    test.add(i);
+	    test.add(new Integer(i));
 	    i++;
 	}
-	test.add(54);
-	test.add(-10);
-	test.add(47);
-	test.add(6);
+	test.add(new Integer(54));
+	test.add(new Integer(-10));
+	test.add(new Integer(47));
+	test.add(new Integer(6));
 	System.out.println(test);
 	System.out.println(test.get(3));
-	System.out.println(test.set(7,99));
+	System.out.println(test.set(7,new Integer(99)));
 	System.out.println(test);
-	System.out.println(test.indexOf(9));
+	System.out.println(test.indexOf(new Integer(9)));
 	System.out.println(test.remove(4));
 	System.out.println(test);
-	System.out.println(test.add(8,23));
+	System.out.println(test.add(8,new Integer(23)));
 	System.out.println(test);
 	System.out.println(test.remove(0));
 	System.out.println(test);
-	System.out.println(test.add(0,31));
+	System.out.println(test.add(0,new Integer(31)));
 	System.out.println(test);
 	
 	
