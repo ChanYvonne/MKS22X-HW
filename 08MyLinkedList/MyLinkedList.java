@@ -61,9 +61,12 @@ public class MyLinkedList<T>{
 	LNode current = start;
 	int count = 0;
 	LNode temp = new LNode(value);
-	if (index == 0){
+	if (index < 0 || index > size){
+	    throw new IndexOutOfBoundsException();
+	}else if (index == 0){
 	    start = temp;
 	    start.setNext(current);
+	    size++;
 	}else{
 	    while (count < index-1){
 		current = current.getNext();
@@ -72,8 +75,8 @@ public class MyLinkedList<T>{
 	    LNode next = current.getNext();
 	    temp.setNext(next);
 	    current.setNext(temp);
+	    size++;
 	}
-	size++;
 	return true;
     }
 
@@ -82,9 +85,12 @@ public class MyLinkedList<T>{
 	LNode current = start;
 	int count = 0;
 	//LNode temp = current.getNext();
-	if (index == 0){
+	if (index < 0 || index >= size){
+	    throw new IndexOutofBoundsException();
+	}else if (index == 0){
 	    oldValue = current.getValue();
 	    start = start.getNext();
+	    size--;
 	}else{
 	    while (count < index-1){
 		current = current.getNext();
@@ -92,20 +98,24 @@ public class MyLinkedList<T>{
 	    }
 	    oldValue = (current.getNext()).getValue();
 	    current.setNext((current.getNext()).getNext());
+	    size--;
 	}
-	size--;
 	return oldValue;
     }
     
     public T get(int index){
-        T value;
+        T value = 0;
 	LNode current = start;
 	int count = 0;
-        while (count != index){
-	    current = current.getNext();
-	    count++;
+	if (index < 0 || index >= size){
+	    throw new IndexOutofBoundsException();
+	}else{
+	    while (count != index){
+		current = current.getNext();
+		count++;
+	    }
+	    value = current.getValue();
 	}
-	value = current.getValue();
 	return value;
     }
     
@@ -113,13 +123,17 @@ public class MyLinkedList<T>{
         T oldValue = get(index);
 	LNode current = start;
         int count = 0;
-        while (current.getNext() != null){
-	    if (count == index){
-		oldValue = current.getValue();
-		current.setValue(newValue);
+	if (index < 0 || index >= size){
+	    throw new IndexOutofBoundsException();
+	}else{
+	    while (current.getNext() != null){
+		if (count == index){
+		    oldValue = current.getValue();
+		    current.setValue(newValue);
+		}
+		current = current.getNext();
+		count++;
 	    }
-	    current = current.getNext();
-	    count++;
 	}
 	return oldValue;
     }
@@ -134,6 +148,9 @@ public class MyLinkedList<T>{
 	while (!(current.getValue().equals(value))){
 	    current = current.getNext();
 	    index++;
+	}
+	if (index == size){
+	    return -1;
 	}
 	return index;
     }
@@ -170,11 +187,11 @@ public class MyLinkedList<T>{
 	System.out.println(test.indexOf(new Integer(9)));
 	System.out.println(test.remove(4));
 	System.out.println(test);
-	System.out.println(test.add(8,new Integer(23)));
+	System.out.println(test.add(-1,new Integer(23)));
 	System.out.println(test);
 	System.out.println(test.remove(0));
 	System.out.println(test);
-	System.out.println(test.add(0,new Integer(31)));
+	System.out.println(test.add(40,new Integer(31)));
 	System.out.println(test);
 	
 	
