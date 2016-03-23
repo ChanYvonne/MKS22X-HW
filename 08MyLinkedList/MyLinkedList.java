@@ -67,6 +67,8 @@ public class MyLinkedList<T>{
 	    start = temp;
 	    start.setNext(current);
 	    size++;
+	}else if (index == size){
+	    add(value);
 	}else{
 	    while (count < index-1){
 		current = current.getNext();
@@ -86,10 +88,19 @@ public class MyLinkedList<T>{
 	int count = 0;
 	//LNode temp = current.getNext();
 	if (index < 0 || index >= size){
-	    throw new IndexOutofBoundsException();
+	    throw new IndexOutOfBoundsException();
 	}else if (index == 0){
 	    oldValue = current.getValue();
 	    start = start.getNext();
+	    size--;
+	}else if (index == size - 1){
+	    while (count < size - 2){
+		current = current.getNext();
+		count++;
+	    }
+	    oldValue = (current.getNext()).getValue();
+	    current.setNext(null);
+	    last = current;
 	    size--;
 	}else{
 	    while (count < index-1){
@@ -104,11 +115,11 @@ public class MyLinkedList<T>{
     }
     
     public T get(int index){
-        T value = 0;
+        T value;
 	LNode current = start;
 	int count = 0;
 	if (index < 0 || index >= size){
-	    throw new IndexOutofBoundsException();
+	    throw new IndexOutOfBoundsException();
 	}else{
 	    while (count != index){
 		current = current.getNext();
@@ -124,7 +135,7 @@ public class MyLinkedList<T>{
 	LNode current = start;
         int count = 0;
 	if (index < 0 || index >= size){
-	    throw new IndexOutofBoundsException();
+	    throw new IndexOutOfBoundsException();
 	}else{
 	    while (current.getNext() != null){
 		if (count == index){
@@ -149,7 +160,7 @@ public class MyLinkedList<T>{
 	    current = current.getNext();
 	    index++;
 	}
-	if (index == size){
+	if (index >= size){
 	    return -1;
 	}
 	return index;
@@ -165,6 +176,14 @@ public class MyLinkedList<T>{
 	    }
 	}
 	System.out.println("[" + ans + "]");	
+    }
+
+    public String toString(boolean test){
+	String ans = "";
+	if (test){
+	    ans+= this.toString()+" head: " + start.getValue() + " tail: " + last.getValue();
+	}
+	return ans;
     }
 
     public static void main(String[]args){
@@ -187,11 +206,12 @@ public class MyLinkedList<T>{
 	System.out.println(test.indexOf(new Integer(9)));
 	System.out.println(test.remove(4));
 	System.out.println(test);
-	System.out.println(test.add(-1,new Integer(23)));
+	//System.out.println(test.add(-1,new Integer(23)));
 	System.out.println(test);
-	System.out.println(test.remove(0));
+	System.out.println(test.size());
+	System.out.println(test.remove(12));
 	System.out.println(test);
-	System.out.println(test.add(40,new Integer(31)));
+	//System.out.println(test.add(40,new Integer(31)));
 	System.out.println(test);
 	
 	
