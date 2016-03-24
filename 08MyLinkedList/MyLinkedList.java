@@ -26,37 +26,37 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}
     }
 
-    private class IterateMe implements Iterable<T>{
-	LNode current;
+    public class IterateMe implements Iterator<T>{
+	private LNode current;
 
-	//public IterateMe(){}
+	public IterateMe(){
+	    current = start;
+	}
 	
 	public boolean hasNext(){
-	    return current.getNext() == null;
+	    return current != null;
 	}
 
-	public LNode next(){
-	    if (hasNext()){
-		return current.getNext();
+	public T next(){
+	    if (!hasNext()){
+		throw new NoSuchElementException();
 	    }
+	    T temp = current.getValue();
+	    current = current.getNext();
+	    return temp;
 	}
 
 	//optional
-	/*
-	  public void remove{
-
-	  }
-	*/
-
-	public Iterator<T> iterator(){
-	    Iterator<T> temp = IterateMe.iterator();
-	    return temp;
+	
+	public void remove(){
+	    throw new UnsupportedOperationException();
 	}
+       
     }
 
+    //could also use an anonymous class since IterateMe() is used for this one time
     public Iterator<T> iterator(){
-        Iterator<T> check = IterateMe.iterator();
-	return check;
+	return new IterateMe();
     }
     
     LNode start;
@@ -95,7 +95,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	int count = 0;
 	LNode temp = new LNode(value);
 	if (index < 0 || index > size){
-	    throw new IndexOutOfBoundsException();
+	    throw new IndexOutOfBoundsException("Index: " + index);
 	}else if (index == 0){
 	    start = temp;
 	    start.setNext(current);
@@ -121,7 +121,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	int count = 0;
 	//LNode temp = current.getNext();
 	if (index < 0 || index >= size){
-	    throw new IndexOutOfBoundsException();
+	    throw new IndexOutOfBoundsException("Index: " + index);
 	}else if (index == 0){
 	    oldValue = current.getValue();
 	    start = start.getNext();
@@ -152,7 +152,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	LNode current = start;
 	int count = 0;
 	if (index < 0 || index >= size){
-	    throw new IndexOutOfBoundsException();
+	    throw new IndexOutOfBoundsException("Index: " + index + " Size: " + size());
 	}else{
 	    while (count != index){
 		current = current.getNext();
@@ -168,7 +168,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	LNode current = start;
         int count = 0;
 	if (index < 0 || index >= size){
-	    throw new IndexOutOfBoundsException();
+	    throw new IndexOutOfBoundsException("Index: " + index);
 	}else{
 	    while (current.getNext() != null){
 		if (count == index){
@@ -220,7 +220,7 @@ public class MyLinkedList<T> implements Iterable<T>{
     }
 
     public static void main(String[]args){
-	
+	/*
 	MyLinkedList<Integer> test = new MyLinkedList<Integer>();
 	System.out.println(test);
 	int i = 0;
@@ -246,9 +246,20 @@ public class MyLinkedList<T> implements Iterable<T>{
 	System.out.println(test);
 	//System.out.println(test.add(40,new Integer(31)));
 	System.out.println(test);
+	*/
+	MyLinkedList<Integer> n = new MyLinkedList<Integer>();
 	
+	//java autoboxes integer so no need to declare new Integer
+	for (int i = 0; i < 20; i++){
+	    n.add(i);
+	}
+	System.out.println(n);
 	
-	
+	for (int i : n){
+	    System.out.println(i+" ");
+	}
+	System.out.println();
+
 	
     }
 }
