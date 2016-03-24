@@ -26,8 +26,10 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}
     }
 
-    private class IterateMe<T>{
+    private class IterateMe implements Iterable<T>{
 	LNode current;
+
+	//public IterateMe(){}
 	
 	public boolean hasNext(){
 	    return current.getNext() == null;
@@ -45,11 +47,16 @@ public class MyLinkedList<T> implements Iterable<T>{
 
 	  }
 	*/
+
+	public Iterator<T> iterator(){
+	    Iterator<T> temp = IterateMe.iterator();
+	    return temp;
+	}
     }
 
     public Iterator<T> iterator(){
-	LNode current = start;
-	return current;
+        Iterator<T> check = IterateMe.iterator();
+	return check;
     }
     
     LNode start;
