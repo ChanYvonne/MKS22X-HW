@@ -325,7 +325,7 @@ public class Quick{
 	
 	
 	/*
-	int[]d = new int [400000];
+	int[]d = new int [4000];
 	int[] c = new int [d.length];
 
 	for(int i = 0; i < d.length; i++){
@@ -339,7 +339,7 @@ public class Quick{
 
 	
 	
-	/*
+	
 	int[]a = new int [4000000];
 	for (int x = 0; x < a.length;x++){
 	    a[x] = (int)Math.random()*4;
@@ -361,7 +361,7 @@ public class Quick{
 	double endTime3 = System.currentTimeMillis();
 	System.out.println("quickSort: " +(endTime3-startTime3)/1000.0);
 	
-	
+	/*
 	if (args[0].equals("a") && args[1].equals("array")){
 	    Arrays.sort(a);
 	    printArray(a);
