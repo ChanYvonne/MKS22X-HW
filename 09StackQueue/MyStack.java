@@ -1,7 +1,13 @@
+import java.util.*;
+
 public class MyStack<T>{
     private MyLinkedList<T> start;
     private int size;
     
+    public MyStack(){
+	start = new MyLinkedList<T>();
+    }
+
     /**
      * Adds the given item to the top of the stack.
      */
@@ -20,8 +26,8 @@ public class MyStack<T>{
 	}else{
 	    T old = start.get(0);
 	    start.remove(0);
-	    return old;
 	    size--;
+	    return old;
 	}
     }
 
@@ -51,8 +57,29 @@ public class MyStack<T>{
 	return start == null;
     }
 
+    public static boolean isMatching(String s){
+	MyStack<String> plate;
+	for (int x = 0; x < s.length(); x++){
+	    if (s.substring(x).equals("<") || 
+		s.substring(x).equals("(") ||
+		s.substring(x).equals("{") ||
+		s.substring(x).equals("[")){
+		plate.add(s.substring(x));
+	    }
+	    if ((s.substring(x).equals(">") || 
+		s.substring(x).equals(")") ||
+		s.substring(x).equals("}") ||
+		 s.substring(x).equals("]")) && plate.peek() == s.substring(x)){
+		plate.pop();
+	    }
+	    
+	}
+	return true;
+    }
+    
     public static void main(String[]args){
-	MyStack<String> test = new MyStack<String>();
+	/*
+	MyStack<Integer> test = new MyStack<Integer>();
 	test.push(7);
 	test.push(6);
 	test.push(8);
@@ -63,6 +90,6 @@ public class MyStack<T>{
 	System.out.println(test.pop());
 	System.out.println(test.isEmpty());
 	System.out.println(test.peek());
-	
+	*/
     }
 }
