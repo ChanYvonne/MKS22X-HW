@@ -114,7 +114,7 @@ public class Quick{
 	double randnum = Math.random()*(right-left+1);
 	int index = left + (int)randnum;
 	int value = data[index];
-	System.out.println(value);
+	//System.out.println(value);
 	int[] limits = new int[2];
 	/*
 	if (left == right){
@@ -215,7 +215,7 @@ public class Quick{
 	*/
 	
 	//printArray(data);
-	printArray(limits);
+	//printArray(limits);
 	return limits;
     }
 
@@ -240,7 +240,7 @@ public class Quick{
 
     
     public static void quickSort(int[] data,int left, int right){
-	if (right-left > 1){
+	if (right-left > 0){
 	    int[] index = partition(data,left,right);
 	    quickSort(data,left,index[0]-1);
 	    quickSort(data,index[1]+1,right);
@@ -304,7 +304,8 @@ public class Quick{
 	
 	*/
 	//quicksort test cases
-      
+
+	/*
 	printArray(test);
         quickSort(test,0,test.length-1);
 	printArray(test);
@@ -323,7 +324,7 @@ public class Quick{
 	printArray(test6);
 	quickSort(test6,0,test6.length-1);
 	printArray(test6);
-	
+	*/
 	
 	
 	/*
@@ -340,7 +341,7 @@ public class Quick{
 	*/
 
 	
-	/*
+	
 	
 	int[]a = new int [4000000];
 	for (int x = 0; x < a.length;x++){
@@ -362,7 +363,7 @@ public class Quick{
         quickSort(a,0,a.length-1);
 	double endTime3 = System.currentTimeMillis();
 	System.out.println("quickSort: " +(endTime3-startTime3)/1000.0);
-	*/
+	
 
 	/*
 	if (args[0].equals("a") && args[1].equals("array")){
@@ -380,7 +381,7 @@ public class Quick{
 	
 	*/
 
-	/*
+	
 	int[]b = new int [4000000];
 	for (int x = 0; x < b.length;x++){
 	    b[x] = (int)Math.random()*Integer.MIN_VALUE + (int)Math.random()*Integer.MAX_VALUE;
@@ -402,7 +403,7 @@ public class Quick{
 	double endTime6 = System.currentTimeMillis();
 	System.out.println("quickSort: " +(endTime6-startTime6)/1000.0);
 	
-	
+	/*
 	if (args[0].equals("b") && args[1].equals("array")){
 	    Arrays.sort(b);
 	    printArray(b);
