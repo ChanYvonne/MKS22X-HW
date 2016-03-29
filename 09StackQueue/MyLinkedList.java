@@ -66,6 +66,7 @@ public class MyLinkedList<T> implements Iterable<T>{
     public String toString(boolean b){
 	return toString()+" head: "+head +", tail: "+tail;
     }
+    
     private LNode getNth(int index){
 	//check bounds before calling this method!
 	LNode temp = head;
@@ -75,6 +76,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}
 	return temp;
     }
+    
     public boolean add(T value){
 	if(head == null){
 	    head = new LNode(value);
