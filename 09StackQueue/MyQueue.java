@@ -51,6 +51,10 @@ public class MyQueue<T>{
 	return size() == 0;
     }
 
+    public String toString(){
+	return end.toString();
+    }
+
     public static void main(String[]args){
 	MyQueue<Integer> test = new MyQueue<Integer>();
 	test.enqueue(7);

@@ -50,13 +50,14 @@ public class MyStack<T>{
 	return size()== 0;
     }
 
-    public String printStack(){	
+    public String toString(){	
 	return start.toString();
     }
     
     public static void main(String[]args){
-	
+	Stack<Integer> real = new Stack<Integer>();
 	MyStack<Integer> test = new MyStack<Integer>();
+	
 	test.push(7);
 	test.push(6);
 	test.push(8);
