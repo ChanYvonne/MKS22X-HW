@@ -1,25 +1,33 @@
 import java.util.*;
+
 public class MyLinkedList<T> implements Iterable<T>{
+
     private class LNode{
 	private T value;
 	private LNode next;
+	
 	public LNode(T v){
 	    value = v;
 	}
+	
 	public T getValue(){
 	    return value;
 	}
+	
 	public LNode getNext(){
 	    return next;
 	}
+	
 	public T setValue(T v){
 	    T old = value;
 	    value = v;
 	    return old;
 	}
+	
 	public void setNext(LNode n){
 	    next = n;
 	}
+	
 	public String toString(){
 	    return value.toString();
 	}
@@ -63,6 +71,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}
 	return ans+"]";
     }
+    
     public String toString(boolean b){
 	return toString()+" head: "+head +", tail: "+tail;
     }
@@ -88,10 +97,12 @@ public class MyLinkedList<T> implements Iterable<T>{
 	size++;
 	return true;
     }
+    
     public T remove(int index){
 	if(index < 0 || index >= size()){
 	    throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size());
 	}
+	
 	LNode temp;
 	if(index == 0){
 	    temp = head;
@@ -112,10 +123,12 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    return temp.getValue();
 	}
     }
+    
     public boolean add(int index, T value){
 	if(index < 0 || index > size()){
 	    throw new IndexOutOfBoundsException("Index "+index+", Size: "+size());
 	}
+	
 	LNode temp = new LNode(value); 
 	if(index == 0){
 	    temp.setNext(head);
