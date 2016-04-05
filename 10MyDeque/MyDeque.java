@@ -117,6 +117,8 @@ public class MyDeque<T>{
     
     public static void main(String[]args){
 	MyDeque<Integer> test = new MyDeque<Integer>();
+	test.addLast(2);
+	System.out.println(test);
 	test.addFirst(4);
 	test.addFirst(7);
 	System.out.println(test);
