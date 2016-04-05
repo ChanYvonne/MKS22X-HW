@@ -80,7 +80,7 @@ public class Driver{
                 n.add(""+i);
                 m.add(""+i);
 	    }else if(op == 1 || m.size() == 0){
-                int x = rand.nextInt(n.size());
+                int x = rand.nextInt(n.size()+1);
                 n.add(x,""+i);
                 m.add(x,""+i);
             }else{

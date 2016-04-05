@@ -147,7 +147,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	if(index < 0 || index >= size()){
 	    throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size());
 	}
-	
+	//add special case when size == 1
 	LNode temp;
 	if(index == 0){
 	    temp = head;
