@@ -8,7 +8,7 @@ public class MyDeque<T>{
 
     @SuppressWarnings("unchecked")
     public MyDeque(){
-	data = (T[])new Object[10];
+	data = (T[])new Object[5];
     }
     
     public void addFirst(T value){
@@ -29,7 +29,7 @@ public class MyDeque<T>{
 	if (size == data.length){
 	    resize();
 	}
-	if (end == data.length-1 || data[end] == null){
+	if (end == data.length-1){ //|| data[end] == null){
 	    end = 0;
 	}else{
 	    end++;
@@ -38,6 +38,7 @@ public class MyDeque<T>{
 	size++;
     }
 
+    @SuppressWarnings("unchecked")
     private void resize(){
 	T[] temp = (T[]) new Object[size*2];
 	int shift = 0;
@@ -110,6 +111,10 @@ public class MyDeque<T>{
 	return ans + "]";
     }
 
+    public void debug(){
+	System.out.println("size: "+size+" start: "+start+" end: "+end);
+    }
+    
     public static void main(String[]args){
 	MyDeque<Integer> test = new MyDeque<Integer>();
 	test.addFirst(4);
