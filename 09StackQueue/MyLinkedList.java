@@ -132,12 +132,12 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    temp.setPrevious(tail);
 	    tail = temp;
 	    */
-
+	    
 	    LNode temp = new LNode(value);
 	    temp.setPrevious(tail);
 	    tail.setNext(temp);
 	    tail = tail.getNext();
-
+	    
 	}
 	size++;
 	return true;
@@ -152,21 +152,29 @@ public class MyLinkedList<T> implements Iterable<T>{
 	if(index == 0){
 	    temp = head;
 	    head = head.getNext();
-	    head.setPrevious(null);
+	    if (!(head == null)){
+		head.setPrevious(null);
+	    }
 	    size--;
 	    if(head == null){
 		tail = null;
 	    }
+	    //System.out.println(toString(true));
 	    return temp.getValue();
-	}else if (index = size()-1){
+	   
+	}else if (index == size()-1){
 	    temp = tail;
 	    tail = tail.getPrevious();
-	    tail.setPrevious(temp.getPrevious());
+	    if (!(tail==null)){
+		tail.setNext(null);
+	    }
 	    size--;
 	    if(tail == null){
 		head = null;
 	    }
+	    //System.out.println(toString(true));
 	    return temp.getValue();
+	 
 	}else{
 	    LNode p = getNth(index-1);
 	    temp = p.getNext();
@@ -175,6 +183,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    }
 	    p.setNext(p.getNext().getNext());
 	    temp.getNext().setPrevious(p);
+	    //System.out.println(toString(true));
 	    size --;
 	    return temp.getValue();
 	}
@@ -187,11 +196,13 @@ public class MyLinkedList<T> implements Iterable<T>{
 	
 	LNode temp = new LNode(value); 
 	if(index == 0){
-	    temp.setNext(head);
-	    temp.setPrevious(null);
-	    head = temp;
 	    if(size==0){
-		tail = head; // fix this because can't set previous of a null
+		head = temp;
+		tail = head;
+	    }else{
+		temp.setNext(head);
+		temp.setPrevious(null);
+		head = temp;
 	    }
 	}else if (index == size()){
 	    return add(value);
@@ -199,8 +210,10 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    LNode p = getNth(index-1);
 	    temp.setPrevious(p);
 	    temp.setNext(p.getNext());
-	    temp.getNext().setPrevious(temp);
+	    p.getNext().setPrevious(temp);
 	    p.setNext(temp);
+	    //System.out.println(p.getNext().toString());
+	    //System.out.println(toString(true));
 	}
 	size++;
 	return true;
