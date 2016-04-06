@@ -79,12 +79,21 @@ public class Driver{
             if(op == 0){//ensure never empty
                 n.add(""+i);
                 m.add(""+i);
-	    }else if(op == 1 || m.size() == 0){
-                int x = rand.nextInt(n.size()+1);
+	    }else if(op == 1 || m.size() == 0 || n.size() == 0){
+		int x;
+		if (m.size() == 0 || m.size() == 1){
+		    x = rand.nextInt(n.size()+1);
+		}else{
+		    x = rand.nextInt(n.size());
+		}
+		System.out.println(x);
+		System.out.println(m.size());
                 n.add(x,""+i);
                 m.add(x,""+i);
             }else{
                 int x = rand.nextInt(n.size());
+		System.out.println(x);
+		System.out.println(m.size());
 		/*
 		String tenp = n.remove(x);
 	        String temp = m.remove(x);

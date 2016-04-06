@@ -137,7 +137,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    temp.setPrevious(tail);
 	    tail.setNext(temp);
 	    tail = tail.getNext();
-	    
+	    //System.out.println(toString(true));
 	}
 	size++;
 	return true;
@@ -147,32 +147,28 @@ public class MyLinkedList<T> implements Iterable<T>{
 	if(index < 0 || index >= size()){
 	    throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size());
 	}
-	//add special case when size == 1
+        
 	LNode temp;
-	if(index == 0){
+	if (size == 1){
+	    temp = head;
+	    head = null;
+	    tail = null;
+	    size--;
+	    return temp.getValue();
+	}else if(index == 0){
 	    temp = head;
 	    head = head.getNext();
-	    if (!(head == null)){
-		head.setPrevious(null);
-	    }
+	    head.setPrevious(null);
 	    size--;
-	    if(head == null){
-		tail = null;
-	    }
-	    //System.out.println(toString(true));
+	    System.out.println(toString(true));
 	    return temp.getValue();
-	   
 	}else if (index == size()-1){
 	    temp = tail;
 	    tail = tail.getPrevious();
-	    if (!(tail==null)){
-		tail.setNext(null);
-	    }
+	    System.out.println(tail.toString());
+	    tail.setNext(null);
 	    size--;
-	    if(tail == null){
-		head = null;
-	    }
-	    //System.out.println(toString(true));
+	    System.out.println(toString(true));
 	    return temp.getValue();
 	 
 	}else{
@@ -183,7 +179,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    }
 	    p.setNext(p.getNext().getNext());
 	    temp.getNext().setPrevious(p);
-	    //System.out.println(toString(true));
+	    System.out.println(toString(true));
 	    size --;
 	    return temp.getValue();
 	}
@@ -194,18 +190,19 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    throw new IndexOutOfBoundsException("Index "+index+", Size: "+size());
 	}
 	
-	LNode temp = new LNode(value); 
-	if(index == 0){
-	    if(size==0){
-		head = temp;
-		tail = head;
-	    }else{
-		temp.setNext(head);
-		temp.setPrevious(null);
-		head = temp;
-	    }
-	}else if (index == size()){
+	LNode temp = new LNode(value);
+		    
+	if (index == size()){
 	    return add(value);
+	}else if(index == 0){
+	    if (size == 1){
+		tail = head;
+	    }
+	    temp.setNext(head);
+	    temp.setPrevious(null);
+	    head = temp;
+	    System.out.println(toString(true));
+	    size++;
 	}else{ 
 	    LNode p = getNth(index-1);
 	    temp.setPrevious(p);
@@ -213,9 +210,9 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    p.getNext().setPrevious(temp);
 	    p.setNext(temp);
 	    //System.out.println(p.getNext().toString());
-	    //System.out.println(toString(true));
+	    System.out.println(toString(true));
+	    size++;
 	}
-	size++;
 	return true;
     }
     //draw pictures!!! it helps
