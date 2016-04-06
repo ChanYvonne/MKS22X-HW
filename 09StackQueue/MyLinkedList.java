@@ -165,7 +165,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 	}else if (index == size()-1){
 	    temp = tail;
 	    tail = tail.getPrevious();
-	    System.out.println(tail.toString());
+	    
 	    tail.setNext(null);
 	    size--;
 	    System.out.println(toString(true));
