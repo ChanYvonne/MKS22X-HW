@@ -9,87 +9,84 @@ public class Driver {
 	try{
 	    d.removeFirst();
 	}catch(NoSuchElementException e){
-	    System.out.println("removeFirst works");
+	    //System.out.println("removeFirst works");
 	}
 
 	try{
 	    d.removeLast();
 	}catch(NoSuchElementException e){
-	    System.out.println("removeLast works");
+	    //System.out.println("removeLast works");
 	}
 	
 	try{
 	    d.getFirst();
 	}catch(NoSuchElementException e){
-	    System.out.println("getFirst works");
+	    //System.out.println("getFirst works");
 	}
 
 	try{
 	    d.getLast();
 	}catch(NoSuchElementException e){
-	    System.out.println("getLast works");
+	    //System.out.println("getLast works");
 	}
-	
-	/*
-        // Limit the number of times addFirst and addLast is done
- 
-        int limit = 1000000;
- 
-        if (args.length > 0) {
-            limit = Integer.parseInt(args[0]);
-        }
- 
+       
         // Add to the head and to the tail
  
-        for (int i = 0; i < limit/2; i++) {
-            Integer r1 = (int) (Math.random() * 1000000);
- 
-            // Add first
-            d.addFirst(r1);
-            ad.addFirst(r1);
+        for (int i = 0; i < 20000; i++) {
+            Integer n = (int) (Math.random() * 100000);
+            d.addFirst(n);
+            ad.addFirst(n);
         }
        
-        for (int i = 0; i < limit/2; i++) {
-            Integer r2 = (int) (Math.random() * 1000000);
+        for (int i = 0; i < 20000; i++) {
+            Integer m = (int) (Math.random() * 100000);
             // Add last
-            d.addLast(r2);
-            ad.addLast(r2);
+            d.addLast(m);
+            ad.addLast(m);
         }
  
         // Test if adding worked by removing elements
  
-        for (int i = 0; i < limit; i++) {
+        for (int i = 0; i < 20000; i++) {
             if (!d.getFirst().equals(ad.getFirst())) {
-                System.out.println("Test #0 (addFirst) failed at: " + i + "!");
+                System.out.println("addFirst failed at: " + i);
+		System.out.println(d.getFirst() + "!=" + ad.getFirst());
                 System.exit(0);
             }
  
             if (!d.getLast().equals(ad.getLast())) {
-                System.out.println("Test #1 (addLast) failed at: " + i + "!");
+                System.out.println("addLast failed at: " + i);
+		System.out.println(d.getLast() + "!=" + ad.getLast());
                 System.exit(0);
             }
- 
+
+	    int dFirst = d.getFirst();
+	    int dLast = d.getLast();
+	    int adFirst = ad.getFirst();
+	    int adLast = ad.getLast();
+	    
             if (!d.removeFirst().equals(ad.removeFirst())) {
-                System.out.println("Test #2 (removeFirst) failed at: " + i + "!");
+                System.out.println("removeFirst failed at: " + i);
+		System.out.println(dFirst + "!=" + adFirst);
                 System.exit(0);
             }
  
             if (!d.removeLast().equals(ad.removeLast())) {
-                System.out.println("Test #3 (removeLast) failed at: " + i + "!");
+                System.out.println("removeLast failed at: " + i);
+		System.out.println(dLast + "!=" + adLast);
                 System.exit(0);
             }
+
+	    if (d.size() != ad.size()) {
+		System.out.println("Unequal sizes: "+ d.size()+ " != " + ad.size());
+		System.exit(0);
+	    }
         }
  
-        // Sizes should be equal
- 
-        if (d.size() != ad.size()) {
-            System.out.println("Not equal sizes. Error!");
-            System.exit(0);
-        }
- 
-        System.out.println("Success!");
+        System.out.println("Yay it works!!");
+	
        
-	*/
+	
     }
  
 }

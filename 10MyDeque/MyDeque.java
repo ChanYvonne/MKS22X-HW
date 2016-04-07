@@ -15,9 +15,13 @@ public class MyDeque<T>{
 	if (size == data.length){
 	    resize();
 	}
+
 	if (start == 0 && size > 0){
 	    start = data.length-1;
+	}else{
+	    start = 0;
 	}
+	
 	if (!(start == 0)){
 	    start--;
 	}
@@ -97,6 +101,10 @@ public class MyDeque<T>{
 	    throw new NoSuchElementException();
 	}
 	return data[end];
+    }
+
+    public int size(){
+	return size;
     }
 
     public String toString(){
