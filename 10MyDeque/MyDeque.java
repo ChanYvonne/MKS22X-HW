@@ -15,14 +15,14 @@ public class MyDeque<T>{
 	if (size == data.length){
 	    resize();
 	}
-
-	if (start == 0 && size > 0){
-	    start = data.length-1;
-	}else{
-	    start = 0;
-	}
 	
-	if (!(start == 0)){
+	if (start == 0){
+	    if (data[start] == null){
+		start = 0;
+	    }else{
+		start = data.length-1;
+	    }
+	}else{
 	    start--;
 	}
 	data[start] = value;
@@ -45,18 +45,29 @@ public class MyDeque<T>{
     @SuppressWarnings("unchecked")
     private void resize(){
 	T[] temp = (T[]) new Object[size*2];
-	int shift = 0;
-	for (int x = 0; x < size; x++){
-	    if (x + start > size){
-		temp[x] = data[x-shift];
-	    }else{
-		temp[x] = data[x+start];
-		shift++;
+	int count = 0;
+	/*
+	while (count < end+1){
+	    temp[count] = data[count];
+	    count ++;
+	}
+	*/
+	if (start > end){
+	    for (int i =start; i <size +1; i++){
+		temp[i-start] = data[i];
+	    }
+	    for (int i = 0; i < end +1;i++){
+		temp[i]=data[i];
 	    }
 	}
+	
 	data = temp;
 	start = 0;
-	end = size;
+	if (size > 0){
+	    end = size - 1;
+	}else{
+	    end = count;
+	}
 	size *= 2;
     }
 
@@ -135,7 +146,7 @@ public class MyDeque<T>{
 	System.out.println(test);
 	test.addFirst(1);
 	System.out.println(test);
-	test.removeFirst();
+        test.removeFirst();
 	System.out.println(test);
 	test.removeLast();
 	System.out.println(test);
