@@ -76,11 +76,12 @@ public class Driver{
         for(int i = 0; i < 6000; i++){
             int op = rand.nextInt(4);
 
-            if(op == 0){//ensure never empty
+            if(op == 0){ //|| n.size() == 0){//ensure never empty
                 n.add(""+i);
                 m.add(""+i);
 	    }else if(op == 1 || m.size() == 0 || n.size() == 0){
-		int x;
+		int x = rand.nextInt(n.size()+1);
+		/*
 		if (m.size() == 0 || m.size() == 1){
 		    x = rand.nextInt(n.size()+1);
 		}else{
@@ -88,21 +89,24 @@ public class Driver{
 		}
 		System.out.println(x);
 		System.out.println(m.size());
+		*/
                 n.add(x,""+i);
                 m.add(x,""+i);
             }else{
                 int x = rand.nextInt(n.size());
-		System.out.println(x);
-		System.out.println(m.size());
 		/*
+		System.out.println(x);
+		System.out.println(m);
+		System.out.println(n.size());
 		String tenp = n.remove(x);
 	        String temp = m.remove(x);
 		System.out.println(tenp);
 		System.out.println(temp);
 		if (!(tenp.equals(temp))){
 		*/
-                if(!n.remove(x).equals(m.remove(x))){
+		if(!n.remove(x).equals(m.remove(x))){
                     System.out.println("Non matching elements removed\n");
+		    
                     System.exit(1);
                 }
             }
