@@ -1,10 +1,8 @@
 import java.util.*;
 
 public class MyDeque<T>{
-    T[] data;
-    int size;
-    int start;
-    int end;
+    private T[] data;
+    private int size,start,end;
 
     @SuppressWarnings("unchecked")
     public MyDeque(){
@@ -17,9 +15,7 @@ public class MyDeque<T>{
 	}
 	
 	if (start == 0){
-	    if (data[start] == null){
-		start = 0;
-	    }else{
+	    if (data[start] != null){
 		start = data.length-1;
 	    }
 	}else{
@@ -33,7 +29,7 @@ public class MyDeque<T>{
 	if (size == data.length){
 	    resize();
 	}
-	if (end == data.length-1){ //|| data[end] == null){
+	if (end == data.length-1){ //data[end] == null){
 	    end = 0;
 	}else{
 	    end++;
@@ -43,31 +39,29 @@ public class MyDeque<T>{
     }
 
     @SuppressWarnings("unchecked")
-    private void resize(){
-	T[] temp = (T[]) new Object[size*2];
+    private void resize(){ //had help from Alvin Zhu (Pd 6)
+	T[] temp = (T[]) new Object[data.length*2];
 	int count = 0;
-	/*
-	while (count < end+1){
-	    temp[count] = data[count];
-	    count ++;
-	}
-	*/
-	if (start > end){
-	    for (int i =start; i <size +1; i++){
-		temp[i-start] = data[i];
+	int index = start;
+
+	while (count < data.length){
+	    if (index == data.length){
+		index = 0;
 	    }
-	    for (int i = 0; i < end +1;i++){
-		temp[i]=data[i];
-	    }
+	    temp[count] = data[index];
+	    count++;
+	    index++;
 	}
 	
 	data = temp;
 	start = 0;
+	
 	if (size > 0){
 	    end = size - 1;
 	}else{
 	    end = count;
 	}
+	
 	size *= 2;
     }
 
@@ -75,28 +69,31 @@ public class MyDeque<T>{
 	if (size == 0){
 	    throw new NoSuchElementException();
 	}
-	int tempfirst = start;
-	if (start == size - 1){
+        T tempfirst = data[start];
+	data[start] = null;
+	if (start == data.length - 1){
 	    start = 0;
 	}else{
 	    start++;
 	}
 	size--;
-	return data[tempfirst];
+	return tempfirst;
     }
 
     public T removeLast(){
 	if (size == 0){
 	    throw new NoSuchElementException();
 	}
-	int tempend = end;
+	//System.out.println(end);
+        T tempend = data[end];
+	data[end] = null;
 	if (end == 0){
 	    end = size - 1;
 	}else{
 	    end--;
 	}
 	size--;
-	return data[tempend];
+	return tempend;
 	
     }
 
@@ -142,9 +139,12 @@ public class MyDeque<T>{
 	test.addFirst(7);
 	System.out.println(test);
 	test.addLast(8);
-	test.resize();
-	System.out.println(test);
+	System.out.println(test);	
 	test.addFirst(1);
+	System.out.println(test);
+	test.addFirst(9);
+	System.out.println(test);
+	test.addLast(3);
 	System.out.println(test);
         test.removeFirst();
 	System.out.println(test);

@@ -29,22 +29,24 @@ public class Driver {
 	}catch(NoSuchElementException e){
 	    //System.out.println("getLast works");
 	}
-       
+
         // Add to the head and to the tail
- 
-        for (int i = 0; i < 20000; i++) {
-            Integer n = (int) (Math.random() * 100000);
+	Random rand = new Random();
+	
+        for (int i = 1; i < 20000; i++) {
+            Integer n = rand.nextInt(i);
             d.addFirst(n);
             ad.addFirst(n);
         }
        
-        for (int i = 0; i < 20000; i++) {
-            Integer m = (int) (Math.random() * 100000);
-            // Add last
+        for (int i = 1; i < 20000; i++) {
+            Integer m = rand.nextInt(i*2);
             d.addLast(m);
             ad.addLast(m);
         }
- 
+
+	System.out.println(d.equals(ad));
+	
         // Test if adding worked by removing elements
  
         for (int i = 0; i < 20000; i++) {
