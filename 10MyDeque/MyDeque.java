@@ -40,7 +40,7 @@ public class MyDeque<T>{
 
     @SuppressWarnings("unchecked")
     private void resize(){ //had help from Alvin Zhu (Pd 6)
-	T[] temp = (T[]) new Object[data.length*2];
+	T[] temp = (T[]) new Object[size*2];
 	int count = 0;
 	int index = start;
 
@@ -55,13 +55,14 @@ public class MyDeque<T>{
 	
 	data = temp;
 	start = 0;
-	
+	end = size-1;
+	/*
 	if (size > 0){
 	    end = size - 1;
 	}else{
 	    end = count;
 	}
-	
+	*/
 	size *= 2;
     }
 
@@ -121,7 +122,7 @@ public class MyDeque<T>{
 	    if (x == data.length-1){
 		ans += data[x];
 	    }else{
-		ans += data[x] + ",";
+		ans += data[x] + ", ";
 	    }
 	}
 	return ans + "]";
@@ -152,6 +153,19 @@ public class MyDeque<T>{
 	System.out.println(test);
 	System.out.println(test.getFirst());
 	System.out.println(test.getLast());
+	test.addFirst(19);
+	test.addFirst(52);
+	test.addFirst(13);
+	test.addFirst(6);
+	System.out.println(test);
+	test.addFirst(11);
+	System.out.println(test);
+	test.addFirst(26);
+	System.out.println(test);
+	test.addFirst(32);
+	System.out.println(test);
+	test.addFirst(41);
+	System.out.println(test);
 	
     }
 }

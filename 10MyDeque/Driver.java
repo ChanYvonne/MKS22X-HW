@@ -33,19 +33,26 @@ public class Driver {
         // Add to the head and to the tail
 	Random rand = new Random();
 	
-        for (int i = 1; i < 20000; i++) {
+        for (int i = 1; i < 20; i++) {
             Integer n = rand.nextInt(i);
             d.addFirst(n);
             ad.addFirst(n);
+	    //System.out.println(d);
+	    //System.out.println(ad);	
         }
        
-        for (int i = 1; i < 20000; i++) {
+        for (int i = 1; i < 20; i++) {
             Integer m = rand.nextInt(i*2);
             d.addLast(m);
             ad.addLast(m);
         }
-
+	/*
 	System.out.println(d.equals(ad));
+	System.out.println(d);
+	System.out.println(d.size());
+	System.out.println(ad);
+	System.out.println(ad.size());
+	*/
 	
         // Test if adding worked by removing elements
  
