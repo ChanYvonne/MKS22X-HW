@@ -33,7 +33,7 @@ public class Driver {
         // Add to the head and to the tail
 	Random rand = new Random();
 	
-        for (int i = 1; i < 20; i++) {
+        for (int i = 1; i < 20000; i++) {
             Integer n = rand.nextInt(i);
             d.addFirst(n);
             ad.addFirst(n);
@@ -41,7 +41,7 @@ public class Driver {
 	    //System.out.println(ad);	
         }
        
-        for (int i = 1; i < 20; i++) {
+        for (int i = 1; i < 20000; i++) {
             Integer m = rand.nextInt(i*2);
             d.addLast(m);
             ad.addLast(m);

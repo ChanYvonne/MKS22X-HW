@@ -133,6 +133,9 @@ public class MyDeque<T>{
     }
     
     public static void main(String[]args){
+	MyDeque<Integer> d = new MyDeque<Integer>();
+	ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+	/*
 	MyDeque<Integer> test = new MyDeque<Integer>();
 	test.addLast(2);
 	System.out.println(test);
@@ -166,6 +169,26 @@ public class MyDeque<T>{
 	System.out.println(test);
 	test.addFirst(41);
 	System.out.println(test);
+	*/
+	Random rand = new Random();
+	for (int i = 1; i < 20; i++) {
+            Integer n = rand.nextInt(i);
+            d.addFirst(n);
+            ad.addFirst(n);
+	    //System.out.println(d);
+	    //System.out.println(ad);	
+        }
+       
+        for (int i = 1; i < 20; i++) {
+            Integer m = rand.nextInt(i*2);
+            d.addLast(m);
+            ad.addLast(m);
+        }
 	
+	//System.out.println(d.equals(ad));
+	System.out.println(d);
+	System.out.println(d.size());
+	System.out.println(ad);
+	System.out.println(ad.size());
     }
 }
