@@ -3,10 +3,11 @@ import java.io.*;
 
 public class BetterMaze{
     private class Node{
-	char value;
+	Coordinate value;
 	Node last;
 
 	public Node(){
+	    value = new Coordinate();
 	}
 
 	public Node getPrev(){
@@ -42,7 +43,14 @@ public class BetterMaze{
      *Postcondition:  the correct solution is in the returned array
     **/
     public int[] solutionCoordinates(){
-        /** IMPLEMENT THIS **/      
+	if (solveBFS() || solveDFS()){
+	    int[] solved = new int[};
+	    for (int x = 0; x < solved.length-1; x+=2){
+		solved[x] = placestogo.peek().getValue().getX();
+		solved[x+1] = placestogo.peek().getValue().getY();
+	    }
+	    return solved;
+	}
 	return new int[1];
     }    
 
@@ -62,29 +70,32 @@ public class BetterMaze{
     /**initialize the frontier as a queue and call solve
     **/
     public boolean solveBFS(){  
-        /** IMPLEMENT THIS **/      
-	return false;
+        placestogo = new FrontierQueue<Node>;
+	return solve();
     }   
 
 
    /**initialize the frontier as a stack and call solve
     */ 
     public boolean solveDFS(){  
-        /** IMPLEMENT THIS **/  
-	return false;
+        placestogo = new FrontierStack<Node>;
+	return solve();
     }    
 
    /**Search for the end of the maze using the frontier. 
       Keep going until you find a solution or run out of elements on the frontier.
     **/
     private boolean solve(){  
-        /** IMPLEMENT THIS **/  
+        if (placestogo.isEmpty() ){
+	    solution = solutionCoordinates();
+	}  
 	return false;
     }    
      
    /**mutator for the animate variable  **/
-    public void setAnimate(boolean b){  animate = b;}    
-
+    public void setAnimate(boolean b){
+	animate = b;
+    }   
 
     public BetterMaze(String filename){
 	animate = false;
@@ -124,21 +135,10 @@ public class BetterMaze{
 		startRow = i / maxc;
 	    }
 	}
-	for (int r = 0; r < maze.length;r++){
-	    for (int c = 0; c < maze[r].length;c++){
-		for (char x = 0; x < maze.length*maze[x].length;x++){
-		    maze[r][c] = x;
-		}
-	    }
-	}
     }
 
-
-
-
-
-
-
+    //--------------animation stuff-------------------------------
+    
     private static final String CLEAR_SCREEN =  "\033[2J";
     private static final String HIDE_CURSOR =  "\033[?25l";
     private static final String SHOW_CURSOR =  "\033[?25h";
