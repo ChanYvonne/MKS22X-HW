@@ -15,6 +15,9 @@ public class FrontierStack<T> implements Frontier<T>{
     }
 
     public T next(){
+	if (data.isEmpty()){
+	    throw new NoSuchElementException();
+	}
 	return data.pop();
     }
 
