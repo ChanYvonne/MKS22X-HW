@@ -46,6 +46,7 @@ public class Driver {
             d.addLast(m);
             ad.addLast(m);
         }
+
 	/*
 	System.out.println(d.equals(ad));
 	System.out.println(d);
@@ -53,21 +54,28 @@ public class Driver {
 	System.out.println(ad);
 	System.out.println(ad.size());
 	*/
+
+	System.out.println(d.getFirst());
+	System.out.println(ad.getFirst());
+	System.out.println(d.getLast());
+	System.out.println(ad.getLast());
 	
         // Test if adding worked by removing elements
  
-        for (int i = 0; i < 20000; i++) {
-            if (!d.getFirst().equals(ad.getFirst())) {
-                System.out.println("addFirst failed at: " + i);
+        for (int i = 0; i < 20000 && !ad.isEmpty() && !d.isEmpty(); i++) {
+
+	    if (!d.getFirst().equals(ad.getFirst())) {
+		System.out.println("addFirst failed at: " + i);
 		System.out.println(d.getFirst() + "!=" + ad.getFirst());
-                System.exit(0);
-            }
+		System.exit(0);
+	    }
  
-            if (!d.getLast().equals(ad.getLast())) {
-                System.out.println("addLast failed at: " + i);
+	    if (!d.getLast().equals(ad.getLast())) {
+		System.out.println("addLast failed at: " + i);
 		System.out.println(d.getLast() + "!=" + ad.getLast());
-                System.exit(0);
-            }
+		System.exit(0);
+	    }
+	    
 
 	    int dFirst = d.getFirst();
 	    int dLast = d.getLast();

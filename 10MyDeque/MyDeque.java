@@ -6,7 +6,7 @@ public class MyDeque<T>{
 
     @SuppressWarnings("unchecked")
     public MyDeque(){
-	data = (T[])new Object[5];
+	data = (T[])new Object[10];
     }
     
     public void addFirst(T value){
@@ -63,7 +63,8 @@ public class MyDeque<T>{
 	    end = count;
 	}
 	*/
-	size *= 2;
+	
+	//size *= 2;
     }
 
     public T removeFirst(){
@@ -116,6 +117,10 @@ public class MyDeque<T>{
 	return size;
     }
 
+    public boolean isEmpty(){
+	return size == 0;
+    }
+
     public String toString(){
 	String ans = "[";
 	for (int x = 0; x < data.length; x++){
@@ -133,8 +138,7 @@ public class MyDeque<T>{
     }
     
     public static void main(String[]args){
-	MyDeque<Integer> d = new MyDeque<Integer>();
-	ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+	
 	/*
 	MyDeque<Integer> test = new MyDeque<Integer>();
 	test.addLast(2);
@@ -170,6 +174,12 @@ public class MyDeque<T>{
 	test.addFirst(41);
 	System.out.println(test);
 	*/
+
+	
+	
+	MyDeque<Integer> d = new MyDeque<Integer>();
+	ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+
 	Random rand = new Random();
 	for (int i = 1; i < 20; i++) {
             Integer n = rand.nextInt(i);
@@ -190,5 +200,10 @@ public class MyDeque<T>{
 	System.out.println(d.size());
 	System.out.println(ad);
 	System.out.println(ad.size());
+	System.out.println(d.getFirst());
+	System.out.println(ad.getFirst());
+	System.out.println(d.getLast());
+	System.out.println(ad.getLast());
+	
     }
 }
