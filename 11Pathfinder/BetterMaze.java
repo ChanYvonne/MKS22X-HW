@@ -31,6 +31,10 @@ public class BetterMaze{
 	    value = c;
 	}
 
+	public boolean hasPrev(){
+	    return !(last == null);
+	}
+
     }
 
     private char[][] maze;
@@ -49,10 +53,14 @@ public class BetterMaze{
     **/
     public int[] solutionCoordinates(){
 	if (solveBFS() || solveDFS()){
-	    int[] solved = new int[};
-	    for (int x = 0; x < solved.length-1; x+=2){
-		solved[x] = placestogo.getPrev().getCol();
-		solved[x+1] = placestogo.getPrev().getRow();
+	    int[] solved = new int[];
+	    Node temp = new Node(placesToGo.getRow(),placesToGo.getCol(),placesToGo.getPrev());
+	    for (int x = 0; temp.hasPrev();x+=2){
+		if (x != 0){
+		    temp = temp.getPrev();
+		}
+		solved[x] = temp.getCol();
+		solved[x+1] = temp.getRow();
 	    }
 	    return solved;
 	}
@@ -73,7 +81,14 @@ public class BetterMaze{
 	return "(" + xcor + "," + ycor + ")"; 
     }
     */
-    
+
+    public int cols(){
+	return maze[0].length;
+    }
+
+    public int rows(){
+	return maze.length;
+    }
     
     /**initialize the frontier as a queue and call solve
     **/
@@ -95,7 +110,7 @@ public class BetterMaze{
     **/
     private boolean solve(){
 	placestogo.add(new Node(startRow,startCol,null));
-	for (Node n: process(
+	//for (Node n: process(
 	for (int r = startRow; r < maze.length; r++){
 	    for (int c = startCol; c < maze[r].length;c++){
 		Node spot = new Node(r,c,null);
@@ -115,8 +130,31 @@ public class BetterMaze{
 	return false;
     }
 
-    public boolean canMoveTo(char c){
-	return c == 'E' || c == ' ';
+    public void process(Node x){
+	Coordinate tempv;
+	if (x.getRow() != rows()-1){
+	    tempv = new Coordinate(x.getRow()+1,x.getCol());
+	    x.setValue(tempv);
+	}
+	if (x.getRow() != 0){
+	    tempv = new Coordinate(x.getRow()-1,x.getCol());
+	    x.setValue(tempv);
+	}
+	if (x.getCol() != cols()-1){
+	    tempv = new Coordinate(x.getRow(),x.getCol()+1);
+	    x.setValue(tempv);
+	}
+	if (x.getCol() != 0{
+	    tempv = new Coordinate(x.getRow()+1,x.getCol()-1);
+	    x.setValue(tempv);
+	}
+	if (canMoveTo(x.next())){
+	    placesToGo.add(x);
+	}
+    }
+
+    public boolean canMoveTo(Node c){
+	return maze[c.getRow()][c.getCol()] == 'E' || maze[c.getRow()][c.getCol()] == ' ';
     }
 
      
