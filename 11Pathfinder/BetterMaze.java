@@ -6,8 +6,8 @@ public class BetterMaze{
 	Coordinate value;
 	Node last;
 
-	public Node(int row, int col, Node prev){
-	    value = new Coordinate(col,row);
+	public Node(Coordinate c, Node prev){
+	    value = new Coordinate(c.getX(),c.getY());
 	    last = prev;
 	}
 
@@ -21,6 +21,10 @@ public class BetterMaze{
 
 	public int getCol(){
 	    return value.getX();
+	}
+
+	public Coordinate getValue(){
+	    return value;
 	}
 
 	public void setPrev(Node prev){
@@ -39,7 +43,7 @@ public class BetterMaze{
 
     private char[][] maze;
     private int[]    solution;
-    private int      startRow,startCol;
+    private int      startRow,startCol,steps;
     private Frontier<Node> placesToGo;
     private boolean  animate;//default to false
 
@@ -53,16 +57,16 @@ public class BetterMaze{
     **/
     public int[] solutionCoordinates(){
 	if (solveBFS() || solveDFS()){
-	    int[] solved = new int[];
-	    Node temp = new Node(placesToGo.getRow(),placesToGo.getCol(),placesToGo.getPrev());
+	    solution = new int[steps*2];
+	    Node temp = new Node(placesToGo.next().getValue(),placesToGo.next().getPrev());
 	    for (int x = 0; temp.hasPrev();x+=2){
 		if (x != 0){
 		    temp = temp.getPrev();
 		}
-		solved[x] = temp.getCol();
-		solved[x+1] = temp.getRow();
+		solution[x] = temp.getCol();
+		solution[x+1] = temp.getRow();
 	    }
-	    return solved;
+	    return solution;
 	}
 	return new int[1];
     }    
@@ -93,7 +97,7 @@ public class BetterMaze{
     /**initialize the frontier as a queue and call solve
     **/
     public boolean solveBFS(){  
-        placestogo = new FrontierQueue<Node>();
+        placesToGo = new FrontierQueue<Node>();
 	return solve();
     }   
 
@@ -101,7 +105,7 @@ public class BetterMaze{
    /**initialize the frontier as a stack and call solve
     */ 
     public boolean solveDFS(){  
-        placestogo = new FrontierStack<Node>();
+        placesToGo = new FrontierStack<Node>();
 	return solve();
     }    
 
@@ -109,55 +113,72 @@ public class BetterMaze{
       Keep going until you find a solution or run out of elements on the frontier.
     **/
     private boolean solve(){
-	placestogo.add(new Node(startRow,startCol,null));
-	//for (Node n: process(
-	for (int r = startRow; r < maze.length; r++){
-	    for (int c = startCol; c < maze[r].length;c++){
-		Node spot = new Node(r,c,null);
-		if (canMoveTo(maze[r][c])){
-		    spot.setPrev(placetogo.peek());
-		    placestogo.add(spot);
+	Coordinate temp = new Coordinate(startRow,startCol);
+	placesToGo.add(new Node(temp,null));
+	maze[startRow][startCol] = '.';
+	while (placesToGo.hasNext()){
+	    Node spot = placesToGo.next();
+	    Node[] neighbors = process(spot);
+	    for (Node x : neighbors){
+		if (x != null){
+		    if (maze[x.getRow()][x.getCol()] == 'E'){
+			solutionCoordinates();
+			return true;
+		    }
+		    placesToGo.add(x);
+		    maze[x.getRow()][x.getCol()] = '.';
+		    steps++;
+		}
+		if (animate){
+		    System.out.println(toString());
 		}
 	    }
-	}
-        if (placestogo.isEmpty()){
-	    solution = solutionCoordinates();
-	}  
-
-	if (animate){
-	    System.out.println(toString());
 	}
 	return false;
     }
 
-    public void process(Node x){
+    public Node[] process(Node x){
+	Node[] neighbors = new Node[4];
+	int index = 0;
 	Coordinate tempv;
 	if (x.getRow() != rows()-1){
 	    tempv = new Coordinate(x.getRow()+1,x.getCol());
-	    x.setValue(tempv);
+	    if (canMoveTo(new Node(tempv,x))){
+		neighbors[index] = new Node(tempv,x);
+		index++;
+	    }
 	}
 	if (x.getRow() != 0){
 	    tempv = new Coordinate(x.getRow()-1,x.getCol());
-	    x.setValue(tempv);
+	    if (canMoveTo(new Node(tempv,x))){
+	        neighbors[index] = new Node(tempv,x);
+		index++;
+	    }
 	}
 	if (x.getCol() != cols()-1){
 	    tempv = new Coordinate(x.getRow(),x.getCol()+1);
-	    x.setValue(tempv);
+	    if (canMoveTo(new Node(tempv,x))){
+	        neighbors[index] = new Node(tempv,x);
+		index++;
+	    }
 	}
-	if (x.getCol() != 0{
+	if (x.getCol() != 0){
 	    tempv = new Coordinate(x.getRow()+1,x.getCol()-1);
-	    x.setValue(tempv);
+	    if (canMoveTo(new Node(tempv,x))){
+		neighbors[index] = new Node(tempv,x);
+		index++;
+	    }
 	}
-	if (canMoveTo(x.next())){
-	    placesToGo.add(x);
-	}
+	
+	return neighbors;
     }
 
     public boolean canMoveTo(Node c){
-	return maze[c.getRow()][c.getCol()] == 'E' || maze[c.getRow()][c.getCol()] == ' ';
+	//System.out.println(c.getRow());
+	//System.out.println(c.getCol());
+	return maze[c.getRow()][c.getCol()] == ' ' || maze[c.getRow()][c.getCol()] == 'E';
     }
 
-     
    /**mutator for the animate variable  **/
     public void setAnimate(boolean b){
 	animate = b;
@@ -254,10 +275,27 @@ public class BetterMaze{
 	}
     } 
     
-
-
-       
+    public static void main(String[] args){
+	String filename = "";
+	if (args.length > 0){
+	    filename = args[0];
+	}else{
+	    System.out.println("Please include filename");
+	    System.exit(0);
+	}
+	BetterMaze test = new BetterMaze(filename);
+	test.clearTerminal();
+	test.setAnimate(true);
+	test.solveBFS();
+	System.out.println(test);
+	System.out.println(Arrays.toString(test.solutionCoordinates()));
+	test.clearTerminal();
+	
+	BetterMaze test2 = new BetterMaze(filename);
+	test.setAnimate(true);
+	test.solveDFS();
+	System.out.println(test);
+	System.out.println(Arrays.toString(test2.solutionCoordinates()));
+    }
     
-    
-
 }
