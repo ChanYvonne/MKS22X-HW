@@ -1,4 +1,4 @@
-public class BSTree<T extends comparable<T>>{
+public class BSTree<T extends Comparable<T>>{
     private class Node{
 	Node left,right;
 	T value;
@@ -30,19 +30,25 @@ public class BSTree<T extends comparable<T>>{
 	public void setRight(Node n){
 	    right = n;
 	}
-	
-	public String toString(){
-	    return this.toString();
+
+	public boolean hasChildren(){
+	    return !(left == null && right == null);
 	}
 
-	private String toString(Node child){
-	    String ans = "";
-	    
+	public String toString(){
+	    return getValue() + " " + toString(left)+ " "+ toString(right);
+	}
+
+	private String toString(Node start){
+	    String ans = "_";
+	    if (start.hasChildren()){
+		ans += start.getValue() + " ";
+	    }
 	    return ans;
 	}
 
 	public void add(T value){
-	
+	    
 	}
 	
 	public boolean contains(T value){
@@ -50,15 +56,27 @@ public class BSTree<T extends comparable<T>>{
 	}
 	   
 	public int getHeight(){
-	    
+	    return 1;
 	}
 
     }
     
     Node root;
+    
+    public BSTree(T data){
+	root = new Node(data);
+    }
+
 
     public String toString(){
 	return root.toString();
+    }
+
+    
+
+    public static void main(String[] args){
+	BSTree<Integer> test = new BSTree<Integer>(4);
+	System.out.println(test);
     }
     
 }
