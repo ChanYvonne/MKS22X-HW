@@ -2,7 +2,10 @@ public class BSTree<T extends Comparable<T>>{
     private class Node{
 	Node left,right;
 	T value;
-
+	
+	public Node(){
+	}
+	
 	public Node(T data){
 	    value = data;
 	}
@@ -15,7 +18,7 @@ public class BSTree<T extends Comparable<T>>{
 	    return left;
 	}
 
-	public Node getValue(){
+	public Node getRight(){
 	    return right;
 	}
 
@@ -40,15 +43,31 @@ public class BSTree<T extends Comparable<T>>{
 	}
 
 	private String toString(Node start){
-	    String ans = "_";
-	    if (start.hasChildren()){
-		ans += start.getValue() + " ";
+	    if (start == null){
+		return "_ ";
 	    }
-	    return ans;
+	    if (!(start.hasChildren())){
+	        return start.getValue() + "";
+	    }
+	    return toString(start.getLeft()) + toString(start.getRight());
 	}
 
-	public void add(T value){
-	    
+	public void add(T data){
+	    if (value == null){
+		value = data;
+	    }else if (value.compareTo(data) > 0){
+		if (left == null){
+		    left = new Node(data);
+		}else{
+		    left.add(data);
+		}
+	    }else{
+		if (right == null){
+		    right = new Node(data);
+		}else{
+		    right.add(data);
+		}
+	    }
 	}
 	
 	public boolean contains(T value){
@@ -63,19 +82,33 @@ public class BSTree<T extends Comparable<T>>{
     
     Node root;
     
-    public BSTree(T data){
-	root = new Node(data);
+    public BSTree(){
+	root = new Node();
+    }
+    
+    public void add(T value){
+	root.add(value);
     }
 
-
     public String toString(){
+	if (root == null){
+	    return "";
+	}
 	return root.toString();
     }
 
     
 
     public static void main(String[] args){
-	BSTree<Integer> test = new BSTree<Integer>(4);
+	BSTree<Integer> test = new BSTree<Integer>();
+	System.out.println(test);
+	test.add(10);
+	System.out.println(test);
+	test.add(15);
+	System.out.println(test);
+	test.add(3);
+	System.out.println(test);
+	test.add(5);
 	System.out.println(test);
     }
     
