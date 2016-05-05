@@ -39,7 +39,7 @@ public class BSTree<T extends Comparable<T>>{
 	}
 
 	public String toString(){
-	    return getValue() + " " + toString(left)+ " "+ toString(right);
+	    return getValue() + " " + toString(left) + " "+ toString(right);
 	}
 
 	private String toString(Node start){
@@ -49,7 +49,7 @@ public class BSTree<T extends Comparable<T>>{
 	    if (!(start.hasChildren())){
 	        return start.getValue() + " _ _ ";
 	    }
-	    return toString(start.getLeft()) + toString(start.getRight());
+	    return start.getValue() + " " + toString(start.getLeft()) + toString(start.getRight());
 	}
 
 	public void add(T data){
@@ -71,40 +71,38 @@ public class BSTree<T extends Comparable<T>>{
 	}
 	
 	public boolean contains(T value){
-	    if (!hasChildren() && this.value == value){
-	        return true;
-	    }else if (hasChildren()){
-	    	return left.getValue() == value || right.getValue() == value;
-	    }else{
-	    	return contains(left) || contains(right);
+	    if (this.value == value){
+		return true;
 	    }
+	    if (value.compareTo(this.value) > 0){
+		if (right != null){
+		    return right.contains(value);
+		}
+	    }else{
+		if (left != null){
+		    return left.contains(value);
+		}
+	    }
+	    return false;
 	}
 	   
 	public int getHeight(){
 	    int rheight = 1;
 	    int lheight = 1;
-	    Node ltemp = new Node();
-	    ltemp = left;
-	    Node rtemp = new Node();
-	    rtemp = right;
 	    if (!hasChildren()){
 	    	return 1;
 	    }
-	    while (left.hasChildren()){
-	    	lheight++;
+	    if (left != null){	
+	        lheight += left.getHeight();
 	    }
-	    while (right.hasChildren()){
-	    	rheight++;
+	    if (right != null){
+		rheight += right.getHeight();
 	    }
-	    if (rheight > lheight){
-	    	return rheight;
-	    }else{
-	    	return lheight;
-	    }
+	    return Math.max(rheight,lheight);
 	}
 
 	public T remove(T value){
-	    if (!contain(value)){
+	    if (!contains(value)){
 	    	return null;
 	    }
 	    return value;
@@ -122,7 +120,7 @@ public class BSTree<T extends Comparable<T>>{
 	if (root == null){
 	    return 0;
 	}
-	return root.height();
+	return root.getHeight();
     }
     
     public void add(T value){
@@ -147,14 +145,29 @@ public class BSTree<T extends Comparable<T>>{
     public static void main(String[] args){
 	BSTree<Integer> test = new BSTree<Integer>();
 	System.out.println(test);
-	test.add(10);
+	test.add(20);
+	System.out.println(test);
+	test.add(39);
 	System.out.println(test);
 	test.add(15);
 	System.out.println(test);
 	test.add(3);
 	System.out.println(test);
-	test.add(5);
+	test.add(11);
 	System.out.println(test);
+	test.add(9);
+	System.out.println(test);
+	test.add(19);
+	System.out.println(test);
+	test.add(10);
+	System.out.println(test);
+	test.add(86);
+	System.out.println(test);
+	System.out.println(test.contains(-1));
+	System.out.println(test.contains(15));
+	System.out.println(test.contains(9));
+	System.out.println(test.contains(5));
+	System.out.println(test.getHeight());
     }
     
 }
