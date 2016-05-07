@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BSTree<T extends Comparable<T>>{
     private class Node{
 	Node left,right;
@@ -14,11 +16,11 @@ public class BSTree<T extends Comparable<T>>{
 	    return value;
 	}
 	
-	public Node getLeft(){
+        private Node getLeft(){
 	    return left;
 	}
 
-	public Node getRight(){
+        private Node getRight(){
 	    return right;
 	}
 
@@ -26,11 +28,11 @@ public class BSTree<T extends Comparable<T>>{
 	    value = data;
 	}
 	
-	public void setLeft(Node n){
+        private void setLeft(Node n){
 	    left = n;
 	}
 
-	public void setRight(Node n){
+        private void setRight(Node n){
 	    right = n;
 	}
 
@@ -101,13 +103,74 @@ public class BSTree<T extends Comparable<T>>{
 	    return Math.max(rheight,lheight);
 	}
 
-	public T remove(T value){
-	    if (!contains(value)){
-	    	return null;
+	private Node getParent(T value){ // tried it this way but it didn't work
+	    Node guardian = new Node();
+	    if (value.compareTo(this.value) > 0){
+		if (right != null && right.getValue() == value){
+		    return new Node(value);
+		}
+	    }else{
+		if (left != null){
+		    return new Node(value);
+		}
 	    }
-	    return value;
+	    return guardian;
 	}
-
+	
+	public void remove(T value){
+	    Node righty;
+	    Node lefty;
+	    if (this.value == null){
+		
+	    }else{
+	    if (right != null && right.getValue() == value){
+		righty = right.getRight();
+		lefty = right.getLeft();
+		if (!hasChildren()){
+		    setRight(null); 
+		}
+		if (lefty == null){
+		    setRight(righty);
+		}
+		if (righty == null){
+		    setRight(lefty);
+		}
+		if (Math.min(lefty.getHeight(),righty.getHeight()) == lefty.getHeight()){
+		    setRight(righty);
+		}else{
+		    setRight(lefty);
+		}
+	    }	
+	    if (left != null && left.getValue() == value){
+		righty = left.getRight();
+		lefty = left.getLeft();
+		if (!hasChildren()){
+		    setLeft(null);
+		}
+		if (lefty == null){
+		    setLeft(righty);
+		}
+		if (righty == null){
+		    setLeft(lefty);
+		}
+		if (Math.min(lefty.getHeight(),righty.getHeight()) == lefty.getHeight()){
+		    setLeft(righty);
+		}else{
+		    setLeft(lefty);
+		} 
+	    }
+	    if (value.compareTo(this.value) > 0){
+		if (right != null){
+		    right.remove(value);
+		}	
+	    }else{
+		if (left != null){
+		    left.remove(value);
+		}
+	    }
+	    }
+	}
+	
     }
     
     Node root;
@@ -140,6 +203,14 @@ public class BSTree<T extends Comparable<T>>{
 	}
 	return root.contains(value);
     }
+
+    public void remove(T value){
+	if (contains(value)){
+	    root.remove(value);
+	}else{
+	    throw new NoSuchElementException("not here!");
+	}
+    }    
     
 
     public static void main(String[] args){
@@ -168,6 +239,11 @@ public class BSTree<T extends Comparable<T>>{
 	System.out.println(test.contains(9));
 	System.out.println(test.contains(5));
 	System.out.println(test.getHeight());
+	test.remove(15);
+	System.out.println(test);
+	test.remove(9);
+	System.out.println(test);
+	test.remove(1);
     }
     
 }
