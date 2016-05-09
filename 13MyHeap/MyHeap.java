@@ -140,6 +140,12 @@ public class MyHeap<T extends Comparable<T>>{
 	}
 	size++;
     }
+
+    public T peek(){
+	if (size == 0){
+	    throw new NoSuchElementException();
+	}
+    }
    
     private void doubleSize(){
 	T[] temp = (T[])new Comparable[size*2+1];
