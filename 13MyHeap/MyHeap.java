@@ -3,9 +3,11 @@ import java.util.*;
 public class MyHeap<T extends Comparable<T>>{
     private int size;
     private T[] data;
+    private boolean isMax;
 
     public MyHeap(){
-	data = (T[]) new Comparable[1];
+	data = (T[]) new Comparable[10];
+	isMax = true;
     }
    
     public MyHeap(T[] array){
@@ -14,9 +16,28 @@ public class MyHeap<T extends Comparable<T>>{
 	    data[x+1] = array[x];
 	}
 	size = array.length;
+	isMax = true;
 	heapify();
     }
-   
+
+    public MyHeap(boolean Max){
+	this();
+        isMax = Max;
+	heapify();
+    }
+    
+    public MyHeap(T[] array, boolean Max){
+	this(array);
+        isMax = Max;
+	heapify();
+    }
+
+    /*
+    public boolean getMax(){
+	return isMax;
+    }
+    */
+    
     private void swap(int a, int b){
 	T temp = data[a];
 	data[a] = data[b];
@@ -31,13 +52,24 @@ public class MyHeap<T extends Comparable<T>>{
    */    
     private void pushDown(int index){
 	if (index*2+1 < data.length){
-	    if (data[index*2].compareTo(data[index]) < 0){
-		swap(index,index*2);
-		pushDown(index*2);
-	    }
-	    if (data[index*2+1].compareTo(data[index]) < 0){
-		swap(index,index*2+1);
-		pushDown(index*2+1);
+	    if (isMax){
+		if (data[index*2].compareTo(data[index]) < 0){
+		    swap(index,index*2);
+		    pushDown(index*2);
+		}
+		if (data[index*2+1].compareTo(data[index]) < 0){
+		    swap(index,index*2+1);
+		    pushDown(index*2+1);
+		}
+	    }else{
+		if (data[index*2].compareTo(data[index]) > 0){
+		    swap(index,index*2);
+		    pushDown(index*2);
+		}
+		if (data[index*2+1].compareTo(data[index]) > 0){
+		    swap(index,index*2+1);
+		    pushDown(index*2+1);
+		}
 	    }
 	}
     }
@@ -51,9 +83,16 @@ public class MyHeap<T extends Comparable<T>>{
    */
     private void pushUp(int index){
 	if (index/2 > 0){
-	    if (data[index/2].compareTo(data[index]) > 0){
-		swap(index,index/2);
-		pushUp(index/2);
+	    if (isMax){
+		if (data[index/2].compareTo(data[index]) > 0){
+		    swap(index,index/2);
+		    pushUp(index/2);
+		}
+	    }else{
+		if (data[index/2].compareTo(data[index]) < 0){
+		    swap(index,index/2);
+		    pushUp(index/2);
+		}
 	    }
 	}
     }
@@ -72,30 +111,36 @@ public class MyHeap<T extends Comparable<T>>{
     }
 
     public T delete(){
-	return null;
+	T temp;
+        if (size == 1){
+	    temp = data[1];
+	    data[size] = null;
+	    return null;
+	}else{
+	    temp = data[1];
+	    data[1] = data[size];
+	    data[size] = null;
+	    pushDown(1);
+	}
+	size--;
+	return temp;
     }
    
     public void add(T x){
 	if (size == 0){
 	    data[1] = x;
-	}
-	if (size == data.length-1){
-	    doubleSize();
-	}
-	int index = 1;
-	while (index*2+1 < data.length){
-	    if (x.compareTo(data[index]) > 0){
-		pushDown(index);
-		data[index] = x;
-		
+	}else{
+	    if (size == data.length-1){
+		doubleSize();
 	    }
+	    data[size+1] = x;
+	    pushUp(size+1);
 	}
 	size++;
     }
    
     private void doubleSize(){
-	size *= 2;
-	T[] temp = (T[])new Comparable[size];
+	T[] temp = (T[])new Comparable[size*2+1];
 	for (int x = 0; x < data.length; x++){
 	    temp[x] = data[x];
 	}
@@ -113,21 +158,39 @@ public class MyHeap<T extends Comparable<T>>{
 	}
 	return ans + "]";
     }
-    
-    /*
-    //do this last
-    public MyHeap(boolean isMax){
-   
-    }
-    public MyHeap(T[] array, boolean isMax){
-    this(array);
-    }
-    */
 
     public static void main(String[]args){
+	
         Integer[] array = {1,5,24,7,15,3,8,4,10,13,6,30,17,9,28};
 	MyHeap<Integer> test = new MyHeap(array);
 	System.out.println(test);
+	
+	/*
+	MyHeap<Integer> test2 = new MyHeap();
+	test2.add(4);
+	System.out.println(test2);
+	test2.add(9);
+	test2.add(-2);
+	test2.add(14);
+	test2.add(10);
+	test2.add(20);
+	test2.add(5);
+	test2.add(12);
+	test2.add(0);
+	test2.add(7);
+	test2.add(19);
+	test2.add(24);
+	test2.add(-10);
+	test2.add(29);
+	test2.add(13);
+        System.out.println(test2);
+	test2.delete();
+	System.out.println(test2);
+	*/
+	
+	MyHeap<Integer> test3 = new MyHeap(array,false);
+	//System.out.println(test3.getMax());
+	System.out.println(test3);
     }
 
 }
