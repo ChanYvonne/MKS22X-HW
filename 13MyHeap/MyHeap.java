@@ -141,6 +141,10 @@ public class MyHeap<T extends Comparable<T>>{
 	size++;
     }
 
+    public int size(){
+	return size;
+    }
+
     public T peek(){
 	if (size == 0){
 	    throw new NoSuchElementException();
@@ -170,7 +174,7 @@ public class MyHeap<T extends Comparable<T>>{
 
     public static void main(String[]args){
 	
-        Integer[] array = {1,5,24,7,15,3,8,4,10,13,6,30,17,9,28};
+        Integer[] array = {1,5,24,8,15,3,8,8,10,13,6,30,17,30,28};
 	MyHeap<Integer> test = new MyHeap<Integer>(array);
 	System.out.println(test);
 	
@@ -200,8 +204,11 @@ public class MyHeap<T extends Comparable<T>>{
 	System.out.println(test2.peek());
 	
 	
-	MyHeap<Integer> test3 = new MyHeap<Integer>(array,false);
+	MyHeap<Integer> test3 = new MyHeap<Integer>(array);
 	//System.out.println(test3.getMax());
+	System.out.println(test3);
+	System.out.println(test3.delete());
+	System.out.println(test3.delete());
 	System.out.println(test3);
     }
 
