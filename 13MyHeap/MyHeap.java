@@ -51,7 +51,7 @@ public class MyHeap<T extends Comparable<T>>{
                      -data[k] and is a valid heap
    */    
     private void pushDown(int index){
-	if (index*2+1 < data.length){
+	if (index*2+1 < size){
 	    if (isMax){
 		if (data[index*2].compareTo(data[index]) > 0){
 		    swap(index,index*2);
@@ -145,6 +145,7 @@ public class MyHeap<T extends Comparable<T>>{
 	if (size == 0){
 	    throw new NoSuchElementException();
 	}
+	return data[1];
     }
    
     private void doubleSize(){
@@ -175,7 +176,8 @@ public class MyHeap<T extends Comparable<T>>{
 	
 	
 	MyHeap<Integer> test2 = new MyHeap();
-	test2.delete();
+	//System.out.println(test2.peek());
+	//test2.delete();
 	test2.add(4);
 	System.out.println(test2);
 	test2.add(9);
@@ -195,6 +197,7 @@ public class MyHeap<T extends Comparable<T>>{
         System.out.println(test2);
 	test2.delete();
 	System.out.println(test2);
+	System.out.println(test2.peek());
 	
 	
 	MyHeap<Integer> test3 = new MyHeap(array,false);
