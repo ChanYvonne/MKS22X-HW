@@ -171,7 +171,7 @@ public class MyHeap<T extends Comparable<T>>{
     public static void main(String[]args){
 	
         Integer[] array = {1,5,24,7,15,3,8,4,10,13,6,30,17,9,28};
-	MyHeap<Integer> test = new MyHeap(array);
+	MyHeap<Integer> test = new MyHeap<Integer>(array);
 	System.out.println(test);
 	
 	
@@ -200,7 +200,7 @@ public class MyHeap<T extends Comparable<T>>{
 	System.out.println(test2.peek());
 	
 	
-	MyHeap<Integer> test3 = new MyHeap(array,false);
+	MyHeap<Integer> test3 = new MyHeap<Integer>(array,false);
 	//System.out.println(test3.getMax());
 	System.out.println(test3);
     }
