@@ -7,7 +7,6 @@ public class MyHeap<T extends Comparable<T>>{
 
     public MyHeap(){
 	data = (T[]) new Comparable[10];
-	isMax = true;
     }
    
     public MyHeap(T[] array){
@@ -16,7 +15,6 @@ public class MyHeap<T extends Comparable<T>>{
 	    data[x+1] = array[x];
 	}
 	size = array.length;
-	isMax = true;
 	heapify();
     }
 
@@ -53,7 +51,7 @@ public class MyHeap<T extends Comparable<T>>{
     private void pushDown(int index){
 	if (index*2+1 < size){
 	    if (isMax){
-		if (data[index*2].compareTo(data[index]) > 0){
+		if (data[index*2].compareTo(data[index]) < 0){
 		    swap(index,index*2);
 		    pushDown(index*2);
 		}
@@ -204,7 +202,7 @@ public class MyHeap<T extends Comparable<T>>{
 	System.out.println(test2.peek());
 	
 	
-	MyHeap<Integer> test3 = new MyHeap<Integer>(array);
+	MyHeap<Integer> test3 = new MyHeap<Integer>(array,true);
 	//System.out.println(test3.getMax());
 	System.out.println(test3);
 	System.out.println(test3.delete());
